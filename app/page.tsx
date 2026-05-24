@@ -16,6 +16,8 @@ import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 export default function Home() {
   useEffect(() => {
@@ -54,19 +56,31 @@ export default function Home() {
       <CustomCursor />
       <ScrollProgress />
       <Navbar />
-      <main>
-        <Hero />
-        <Clients />
-        <Benefits />
-        <Features />
-        <Dashboard />
-        <MobileApp />
-        <Pricing />
-        <Comparison />
-        <Testimonials />
-        <FAQ />
-        <CTA />
+      {/* flex-col + order classes: Pricing sobe para 3º no mobile, mantém 7º no desktop */}
+      <main className="flex flex-col pb-20 lg:pb-0">
+        <div className="order-1"><Hero /></div>
+        <div className="order-2"><Clients /></div>
+        <div className="order-3 lg:order-7"><Pricing /></div>
+        <div className="order-4 lg:order-3"><Benefits /></div>
+        <div className="order-5 lg:order-4"><Features /></div>
+        <div className="order-6 lg:order-5"><Dashboard /></div>
+        <div className="order-7 lg:order-6"><MobileApp /></div>
+        <div className="order-8"><Comparison /></div>
+        <div className="order-9"><Testimonials /></div>
+        <div className="order-10"><FAQ /></div>
+        <div className="order-11"><CTA /></div>
       </main>
+      {/* ── Sticky mobile CTA — hidden on desktop ── */}
+      <div className="fixed bottom-0 inset-x-0 z-50 lg:hidden mobile-sticky-cta px-4 pt-3 pb-4">
+        <motion.button
+          whileTap={{ scale: 0.97 }}
+          onClick={() => document.getElementById("planos")?.scrollIntoView({ behavior: "smooth" })}
+          className="w-full btn-primary py-4 rounded-2xl text-base font-bold text-white flex items-center justify-center gap-2.5 shadow-[0_0_28px_rgba(255,122,0,0.35)]"
+        >
+          Solicitar acesso
+          <ArrowRight className="w-5 h-5" />
+        </motion.button>
+      </div>
       <Footer />
     </>
   );

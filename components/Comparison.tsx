@@ -39,7 +39,7 @@ function Cell({ value }: { value: boolean | string }) {
 
 export function Comparison() {
   return (
-    <section className="py-20 relative">
+    <section className="py-14 lg:py-20 relative">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -53,11 +53,12 @@ export function Comparison() {
           <p className="text-[#666]">Veja exatamente o que cada plano inclui.</p>
         </motion.div>
 
+        <div className="overflow-x-auto -mx-4 px-4 lg:mx-0 lg:px-0 no-scrollbar">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass rounded-3xl border border-white/[0.07] overflow-hidden"
+          className="glass rounded-3xl border border-white/[0.07] overflow-hidden min-w-[560px] lg:min-w-0"
         >
           {/* Header */}
           <div className="grid grid-cols-4 border-b border-white/[0.06]">
@@ -98,6 +99,7 @@ export function Comparison() {
             </motion.div>
           ))}
         </motion.div>
+        </div>
       </div>
     </section>
   );

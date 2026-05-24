@@ -105,7 +105,8 @@ export function Features() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="relative -mx-4 px-4 lg:mx-0 lg:px-0 lg:overflow-visible">
+          <div className="mobile-scroll lg:grid lg:grid-cols-4 lg:gap-4">
           {features.map((feature, i) => (
             <motion.div
               key={i}
@@ -113,7 +114,7 @@ export function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ delay: i * 0.07, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className={`relative group rounded-2xl p-5 border transition-all duration-300 cursor-default ${
+              className={`w-[78vw] max-w-[300px] lg:w-auto relative group rounded-2xl p-5 border transition-all duration-300 cursor-default ${
                 feature.highlight
                   ? "bg-gradient-to-br from-[#FF7A00]/10 to-[#FF7A00]/5 border-[#FF7A00]/30 hover:border-[#FF7A00]/60 hover:shadow-[0_0_40px_rgba(255,122,0,0.15)]"
                   : "glass border-white/[0.06] hover:border-[#FF7A00]/20 hover:bg-white/[0.03] hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
@@ -150,6 +151,7 @@ export function Features() {
               />
             </motion.div>
           ))}
+          </div>
         </div>
       </div>
     </section>

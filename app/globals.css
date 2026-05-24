@@ -391,3 +391,41 @@ a, button {
   from { transform: rotate(0deg) translateX(140px) rotate(0deg); }
   to   { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
 }
+
+/* ── Mobile sticky CTA ── */
+.mobile-sticky-cta {
+  background: linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255,122,0,0.14);
+}
+
+/* ── Mobile scroll containers ── */
+.mobile-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 12px;
+}
+.mobile-scroll::-webkit-scrollbar { display: none; }
+.mobile-scroll > * { scroll-snap-align: start; flex-shrink: 0; }
+
+/* ── Reduce heavy blur on mobile for performance ── */
+@media (max-width: 1023px) {
+  .glass {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .glass-card {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .glass-dark {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}

@@ -56,7 +56,7 @@ const benefits = [
 
 export function Benefits() {
   return (
-    <section className="py-28 relative">
+    <section className="py-16 lg:py-28 relative">
       <div className="absolute inset-0 orange-gradient-bg pointer-events-none" />
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <motion.div
@@ -83,7 +83,7 @@ export function Benefits() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
           {benefits.map((benefit, i) => (
             <motion.div
               key={i}

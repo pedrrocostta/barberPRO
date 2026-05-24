@@ -53,7 +53,7 @@ const chartData = [30, 50, 40, 70, 55, 80, 65, 90, 72, 85, 78, 100];
 
 export function Dashboard() {
   return (
-    <section className="py-28 relative overflow-hidden">
+    <section className="py-16 lg:py-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-[#0D0D0D]" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
@@ -81,12 +81,62 @@ export function Dashboard() {
           </p>
         </motion.div>
 
+        {/* Mobile simplified stats view */}
+        <div className="lg:hidden mb-4">
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            {[
+              { label: "Faturamento Hoje", value: "R$ 890", delta: "+12%", colorCls: "text-emerald-400" },
+              { label: "Agendamentos", value: "24", delta: "7 pendentes", colorCls: "text-blue-400" },
+              { label: "Ticket Médio", value: "R$ 52", delta: "+R$ 8", colorCls: "text-[#FF7A00]" },
+              { label: "Novos Clientes", value: "5", delta: "Esta semana", colorCls: "text-purple-400" },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="glass-card rounded-2xl p-4 border border-white/[0.06]"
+              >
+                <div className="text-[10px] text-[#555] uppercase tracking-wide mb-2">{stat.label}</div>
+                <div className="text-2xl font-black text-white" style={{ letterSpacing: "-0.02em" }}>{stat.value}</div>
+                <div className={`text-xs font-medium mt-1 ${stat.colorCls}`}>{stat.delta}</div>
+              </motion.div>
+            ))}
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="glass-card rounded-2xl p-4 border border-white/[0.06]"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="text-sm font-bold text-white">Faturamento do Mês</div>
+              <div className="text-xs text-emerald-400 font-semibold">+23.4%</div>
+            </div>
+            <div className="flex items-end gap-1 h-16">
+              {[30,48,40,65,55,78,62,85,70,90,75,100].map((h, i) => (
+                <motion.div
+                  key={i}
+                  className="flex-1 rounded-t-sm"
+                  style={{ background: i === 11 ? "linear-gradient(to top,#FF7A00,#FFB347)" : "rgba(255,122,0,0.18)" }}
+                  initial={{ height: 0 }}
+                  whileInView={{ height: `${h}%` }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + i * 0.04, duration: 0.4 }}
+                />
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Desktop full dashboard — hidden on mobile */}
         <motion.div
           initial={{ opacity: 0, y: 60, scale: 0.97 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="rounded-3xl overflow-hidden border border-white/[0.07] shadow-[0_0_120px_rgba(0,0,0,0.95),0_0_60px_rgba(255,122,0,0.06)] max-w-6xl mx-auto"
+          className="hidden lg:block rounded-3xl overflow-hidden border border-white/[0.07] shadow-[0_0_120px_rgba(0,0,0,0.95),0_0_60px_rgba(255,122,0,0.06)] max-w-6xl mx-auto"
         >
           {/* Window chrome */}
           <div className="bg-[#161616] border-b border-white/[0.06] px-5 py-4 flex items-center gap-4">

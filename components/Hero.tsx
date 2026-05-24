@@ -151,7 +151,7 @@ export function Hero() {
         />
       ))}
 
-      <div className="relative z-10 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-20">
+      <div className="relative z-10 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-12 lg:py-20">
         {/* Hero copy */}
         <motion.div
           variants={containerVariants}
@@ -187,12 +187,12 @@ export function Hero() {
           </motion.p>
 
           {/* Single CTA */}
-          <motion.div variants={itemVariants} className="flex justify-center mb-14">
+          <motion.div variants={itemVariants} className="flex justify-center mb-10 lg:mb-14 px-2 sm:px-0">
             <motion.button
               whileHover={{ scale: 1.03, y: -3 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => document.getElementById("planos")?.scrollIntoView({ behavior: "smooth" })}
-              className="btn-primary px-10 py-4 rounded-2xl text-base font-bold text-white flex items-center gap-2.5 group shadow-[0_0_32px_rgba(255,122,0,0.3)]"
+              className="btn-primary w-full sm:w-auto px-10 py-4 rounded-2xl text-base font-bold text-white flex items-center justify-center gap-2.5 group shadow-[0_0_32px_rgba(255,122,0,0.3)]"
             >
               Solicitar acesso
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -202,7 +202,7 @@ export function Hero() {
           {/* Trust signals */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap items-center justify-center gap-6 text-sm text-[#444]"
+            className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-6 text-sm text-[#444]"
           >
             {trustSignals.map((item) => (
               <div key={item.text} className="flex items-center gap-2">
@@ -218,7 +218,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 64, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mt-20 max-w-5xl mx-auto"
+          className="relative mt-12 lg:mt-20 max-w-5xl mx-auto"
         >
           {/* Floating cards */}
           {floatingCards.map((card, i) => (

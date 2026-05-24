@@ -100,7 +100,7 @@ function TestimonialCard({ t, i }: { t: typeof testimonials[0]; i: number }) {
 
 export function Testimonials() {
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="py-16 lg:py-24 relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF7A00]/20 to-transparent" />
       <div className="absolute inset-0 bg-[#0D0D0D]" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full bg-[#FF7A00]/[0.04] blur-[100px] pointer-events-none" />
@@ -110,7 +110,7 @@ export function Testimonials() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 lg:mb-16"
         >
           <div className="badge-orange inline-flex mb-4">Depoimentos</div>
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4">
@@ -140,7 +140,18 @@ export function Testimonials() {
           <span className="text-[#555] text-sm">de 5 · +1.200 avaliações</span>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* Mobile: horizontal scroll */}
+        <div className="lg:hidden overflow-x-auto -mx-4 px-4 no-scrollbar">
+          <div className="flex gap-4 pb-4">
+            {testimonials.map((t, i) => (
+              <div key={i} className="min-w-[85vw] max-w-[340px]">
+                <TestimonialCard t={t} i={i} />
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Desktop: grid */}
+        <div className="hidden lg:grid grid-cols-3 gap-5">
           {testimonials.map((t, i) => (
             <TestimonialCard key={i} t={t} i={i} />
           ))}

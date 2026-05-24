@@ -37,7 +37,7 @@ export function CTA() {
   const orb2Y = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   return (
-    <section ref={sectionRef} className="py-40 relative overflow-hidden">
+    <section ref={sectionRef} className="py-20 lg:py-40 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-[#0A0A0A]" />
 
@@ -112,7 +112,7 @@ export function CTA() {
 
           {/* Headline */}
           <h2
-            className="text-5xl sm:text-6xl lg:text-7xl xl:text-[76px] font-black tracking-tight leading-[1.06] mb-7"
+            className="text-4xl sm:text-5xl lg:text-7xl xl:text-[76px] font-black tracking-tight leading-[1.06] mb-6 lg:mb-7"
             style={{ letterSpacing: "-0.034em" }}
           >
             Eleve o padrão
@@ -128,12 +128,12 @@ export function CTA() {
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
+          <div className="flex flex-col items-stretch sm:flex-row sm:items-center justify-center gap-4 mb-10 lg:mb-14 px-2 sm:px-0">
             <motion.button
               whileHover={{ scale: 1.04, y: -3 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => document.getElementById("planos")?.scrollIntoView({ behavior: "smooth" })}
-              className="btn-primary px-12 py-5 rounded-2xl text-lg font-bold text-white flex items-center gap-3 shadow-[0_0_48px_rgba(255,122,0,0.38),0_6px_24px_rgba(255,122,0,0.16)] group"
+              className="btn-primary w-full sm:w-auto px-12 py-5 rounded-2xl text-lg font-bold text-white flex items-center justify-center gap-3 shadow-[0_0_48px_rgba(255,122,0,0.38),0_6px_24px_rgba(255,122,0,0.16)] group"
             >
               Solicitar acesso
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -141,7 +141,7 @@ export function CTA() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="btn-secondary px-10 py-5 rounded-2xl text-lg font-semibold text-white"
+              className="btn-secondary w-full sm:w-auto px-10 py-5 rounded-2xl text-lg font-semibold text-white"
             >
               Falar com consultor
             </motion.button>

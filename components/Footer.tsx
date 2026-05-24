@@ -43,7 +43,7 @@ export function Footer() {
       {/* Background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-[#FF7A00]/[0.03] blur-[80px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+      <div className="relative z-10 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pb-safe">
         {/* Stats strip */}
         <div className="border-b border-white/[0.04] py-10">
           <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto sm:max-w-none sm:grid-cols-3">
@@ -139,7 +139,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/[0.04] py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-white/[0.04] py-6 pb-8 lg:pb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5 text-xs text-[#333]">
             <Logo size={16} />
             <span>© {new Date().getFullYear()} BarberPro. Todos os direitos reservados.</span>
