@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>BarberPro Ad 3 - Urgência</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    background: #111111;
+    font-family: 'Satoshi', system-ui, sans-serif;
+    color: #fff;
+    position: relative;
+  }
+
+  /* Left panel — dark/problem */
+  .panel-left {
+    position: absolute;
+    left: 0; top: 0;
+    width: 50%;
+    height: 100%;
+    background: #0E0E0E;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    padding: 64px 52px;
+  }
+
+  /* Right panel — solution */
+  .panel-right {
+    position: absolute;
+    right: 0; top: 0;
+    width: 50%;
+    height: 100%;
+    background: #131313;
+    display: flex;
+    flex-direction: column;
+    padding: 64px 52px;
+  }
+
+  /* Glow on right panel */
+  .glow-right {
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(ellipse at center, rgba(255,122,0,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* Grid only on right */
+  .grid-right {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,122,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,122,0,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Top bar */
+  .top-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #FF7A00, #ffb347, #FF7A00, transparent);
+    opacity: 0.8;
+    z-index: 20;
+  }
+
+  /* Logo centered at bottom */
+  .logo-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 72px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 52px;
+    z-index: 20;
+    background: rgba(17,17,17,0.9);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #ff8c1a, #e06d00);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text { font-size: 18px; font-weight: 700; }
+  .logo-text span { color: #FF7A00; }
+
+  .btn {
+    background: linear-gradient(135deg, #ff8c1a 0%, #ff7a00 50%, #e06d00 100%);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 0 24px rgba(255,122,0,0.35);
+    letter-spacing: -0.2px;
+  }
+
+  /* LEFT CONTENT */
+  .left-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,60,60,0.1);
+    border: 1px solid rgba(255,60,60,0.2);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FF5555;
+    margin-bottom: 36px;
+    width: fit-content;
+  }
+
+  .left-headline {
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: #fff;
+    margin-bottom: 36px;
+    opacity: 0.9;
+  }
+
+  .problem-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: auto;
+  }
+
+  .problem-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 16px;
+    color: #888;
+    line-height: 1.4;
+  }
+
+  .problem-icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: rgba(255,60,60,0.1);
+    border: 1px solid rgba(255,60,60,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .loss-badge {
+    background: rgba(255,60,60,0.08);
+    border: 1px solid rgba(255,60,60,0.15);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 24px;
+  }
+  .loss-value { font-size: 36px; font-weight: 900; color: #FF5555; letter-spacing: -1px; }
+  .loss-label { font-size: 13px; color: #555; margin-top: 4px; }
+
+  /* RIGHT CONTENT */
+  .right-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,122,0,0.12);
+    border: 1px solid rgba(255,122,0,0.3);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FF7A00;
+    margin-bottom: 36px;
+    width: fit-content;
+  }
+
+  .right-headline {
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 36px;
+  }
+
+  .right-headline span {
+    background: linear-gradient(135deg, #ff7a00, #ffbe7a, #ff9933);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .solution-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: auto;
+  }
+
+  .solution-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 15px;
+    color: #B3B3B3;
+    line-height: 1.4;
+  }
+
+  .solution-icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: rgba(255,122,0,0.12);
+    border: 1px solid rgba(255,122,0,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .plan-badge {
+    background: rgba(255,122,0,0.08);
+    border: 1px solid rgba(255,122,0,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 20px;
+  }
+
+  .plan-price {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 4px;
+  }
+
+  .plan-value {
+    font-size: 34px;
+    font-weight: 900;
+    color: #FF7A00;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  .plan-value sup { font-size: 18px; vertical-align: top; margin-top: 6px; display: inline-block; }
+  .plan-value sub { font-size: 16px; color: #666; font-weight: 500; }
+
+  .plan-trial {
+    font-size: 13px;
+    color: #28CA41;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  /* Divider arrow */
+  .divider-arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 30;
+    width: 52px;
+    height: 52px;
+    background: #FF7A00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 0 30px rgba(255,122,0,0.5), 0 0 60px rgba(255,122,0,0.2);
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="divider-arrow">→</div>
+
+  <!-- LEFT PANEL: Problem -->
+  <div class="panel-left">
+    <div class="left-tag">⚠ Sem controle</div>
+    <h2 class="left-headline">Sua barbearia está sangrando dinheiro</h2>
+    <ul class="problem-list">
+      <li class="problem-item">
+        <div class="problem-icon">✗</div>
+        <div>Clientes faltam sem avisar — horário perdido</div>
+      </li>
+      <li class="problem-item">
+        <div class="problem-icon">✗</div>
+        <div>Comissão calculada na mão, sempre com erro</div>
+      </li>
+      <li class="problem-item">
+        <div class="problem-icon">✗</div>
+        <div>Agenda no caderno ou no WhatsApp pessoal</div>
+      </li>
+      <li class="problem-item">
+        <div class="problem-icon">✗</div>
+        <div>Sem relatório, sem saber o que realmente entra</div>
+      </li>
+      <li class="problem-item">
+        <div class="problem-icon">✗</div>
+        <div>Clientes somem e você não sabe por quê</div>
+      </li>
+    </ul>
+    <div class="loss-badge">
+      <div class="loss-value">−R$2.000</div>
+      <div class="loss-label">média de perda mensal por falta de controle</div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: Solution -->
+  <div class="panel-right">
+    <div class="grid-right"></div>
+    <div class="glow-right"></div>
+    <div style="position:relative;z-index:2;display:flex;flex-direction:column;height:100%;">
+      <div class="right-tag">✓ Com BarberPro</div>
+      <h2 class="right-headline">Gestão<br><span>profissional</span><br>em 24 horas</h2>
+      <ul class="solution-list">
+        <li class="solution-item">
+          <div class="solution-icon">📱</div>
+          <div>WhatsApp automático: confirmação + lembrete</div>
+        </li>
+        <li class="solution-item">
+          <div class="solution-icon">💰</div>
+          <div>Comissões calculadas automaticamente por barberiro</div>
+        </li>
+        <li class="solution-item">
+          <div class="solution-icon">📅</div>
+          <div>Agenda online 24h com bloqueio inteligente</div>
+        </li>
+        <li class="solution-item">
+          <div class="solution-icon">📊</div>
+          <div>Dashboard financeiro em tempo real</div>
+        </li>
+        <li class="solution-item">
+          <div class="solution-icon">⭐</div>
+          <div>Programa de fidelidade automático</div>
+        </li>
+      </ul>
+      <div class="plan-badge">
+        <div class="plan-price">A partir de</div>
+        <div class="plan-value"><sup>R$</sup>59<sub>/mês</sub></div>
+        <div class="plan-trial">✓ 14 dias grátis · sem cartão</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="logo-bar">
+    <div class="logo">
+      <div class="logo-icon">✂</div>
+      <div class="logo-text">Barber<span>Pro</span></div>
+    </div>
+    <div style="font-size:14px;color:#444;">barberpro.com.br</div>
+    <button class="btn">Solicitar acesso →</button>
+  </div>
+</body>
+</html>

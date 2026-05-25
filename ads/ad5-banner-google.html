@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<title>BarberPro Ad 5 - Google Display Banner</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px;
+    height: 628px;
+    overflow: hidden;
+    background: #111111;
+    font-family: 'Satoshi', system-ui, sans-serif;
+    color: #fff;
+    position: relative;
+  }
+
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,122,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,122,0,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .glow-left {
+    position: absolute;
+    top: 50%; left: -100px;
+    transform: translateY(-50%);
+    width: 700px; height: 600px;
+    background: radial-gradient(ellipse at center, rgba(255,122,0,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .glow-right {
+    position: absolute;
+    top: 50%; right: -50px;
+    transform: translateY(-50%);
+    width: 500px; height: 400px;
+    background: radial-gradient(ellipse at center, rgba(255,122,0,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .top-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, #FF7A00, #ffb347, #FF7A00, transparent);
+    z-index: 20;
+  }
+
+  /* Layout: left text + right dashboard */
+  .layout {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* LEFT */
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 56px 64px;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, #ff8c1a, #e06d00);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 0 16px rgba(255,122,0,0.4);
+  }
+  .logo-text { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+  .logo-text span { color: #FF7A00; }
+
+  .headline {
+    font-size: 56px;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+  }
+  .headline-gradient {
+    background: linear-gradient(135deg, #ff7a00, #ffbe7a, #ff9933);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .sub {
+    font-size: 17px;
+    color: #777;
+    line-height: 1.5;
+    margin-bottom: 36px;
+    max-width: 420px;
+  }
+
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #B3B3B3;
+  }
+
+  .feat-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #FF7A00;
+    box-shadow: 0 0 6px rgba(255,122,0,0.6);
+    flex-shrink: 0;
+  }
+
+  .bottom-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .btn {
+    background: linear-gradient(135deg, #ff8c1a 0%, #ff7a00 50%, #e06d00 100%);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 0 30px rgba(255,122,0,0.4);
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+  }
+
+  .trial-note {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.4;
+  }
+  .trial-note strong { color: #28CA41; }
+
+  /* RIGHT — Dashboard mockup */
+  .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 48px;
+    position: relative;
+  }
+
+  .dashboard {
+    width: 100%;
+    background: #1A1A1A;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,122,0,0.08);
+  }
+
+  .dash-header {
+    background: #161616;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .dash-dots {
+    display: flex; gap: 6px;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.red { background: #FF5F57; }
+  .dot.yellow { background: #FEBC2E; }
+  .dot.green { background: #28C840; }
+
+  .dash-title {
+    font-size: 12px;
+    color: #444;
+    font-weight: 500;
+  }
+
+  .dash-badge {
+    background: rgba(255,122,0,0.15);
+    border: 1px solid rgba(255,122,0,0.3);
+    border-radius: 100px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: #FF7A00;
+    font-weight: 600;
+  }
+
+  .dash-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* KPI row */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .kpi {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  .kpi-label { font-size: 10px; color: #444; margin-bottom: 6px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+  .kpi-value { font-size: 22px; font-weight: 900; color: #FF7A00; letter-spacing: -0.5px; line-height: 1; }
+  .kpi-change { font-size: 10px; color: #28CA41; margin-top: 4px; font-weight: 600; }
+
+  /* Chart area */
+  .chart-area {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 14px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .chart-label { font-size: 10px; color: #333; font-weight: 500; }
+
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 60px;
+  }
+
+  .bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+  .bar {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    background: rgba(255,122,0,0.25);
+    min-height: 4px;
+  }
+  .bar.active { background: linear-gradient(180deg, #FF7A00, #e06d00); }
+  .bar-lbl { font-size: 8px; color: #333; }
+
+  /* Appointments list */
+  .appt-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .appt-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 8px 12px;
+  }
+
+  .appt-time {
+    font-size: 11px;
+    color: #FF7A00;
+    font-weight: 700;
+    width: 36px;
+    flex-shrink: 0;
+  }
+
+  .appt-avatar {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff8c1a, #e06d00);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700;
+  }
+
+  .appt-name { font-size: 12px; color: #999; flex: 1; }
+  .appt-service { font-size: 11px; color: #555; }
+
+  .appt-status {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+  .appt-status.confirmed {
+    background: rgba(40,202,65,0.12);
+    color: #28CA41;
+  }
+  .appt-status.pending {
+    background: rgba(255,122,0,0.12);
+    color: #FF7A00;
+  }
+
+  /* Floating badge */
+  .float-badge {
+    position: absolute;
+    top: 32px; right: 28px;
+    background: rgba(40,202,65,0.15);
+    border: 1px solid rgba(40,202,65,0.3);
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #28CA41;
+    font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+</style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="glow-left"></div>
+  <div class="glow-right"></div>
+  <div class="top-bar"></div>
+
+  <div class="layout">
+    <!-- LEFT: Copy -->
+    <div class="left">
+      <div class="logo">
+        <div class="logo-icon">✂</div>
+        <div class="logo-text">Barber<span>Pro</span></div>
+      </div>
+
+      <h1 class="headline">
+        Gestão<br>
+        <span class="headline-gradient">profissional</span><br>
+        para barbearias
+      </h1>
+
+      <p class="sub">
+        Agenda, WhatsApp automático, financeiro e CRM em um só lugar. Feito para barbearias de alto padrão.
+      </p>
+
+      <div class="features">
+        <div class="feature"><div class="feat-dot"></div>Agenda online 24h com bloqueio automático</div>
+        <div class="feature"><div class="feat-dot"></div>WhatsApp automático: 80% menos faltas</div>
+        <div class="feature"><div class="feat-dot"></div>Comissões e financeiro em tempo real</div>
+        <div class="feature"><div class="feat-dot"></div>+40% de faturamento em 3 meses</div>
+      </div>
+
+      <div class="bottom-row">
+        <button class="btn">Testar grátis →</button>
+        <div class="trial-note">
+          <strong>14 dias grátis</strong><br>
+          sem cartão · implementação em 24h
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Dashboard mockup -->
+    <div class="right">
+      <div class="float-badge">
+        <span>●</span> 3.000+ barbearias ativas
+      </div>
+
+      <div class="dashboard">
+        <div class="dash-header">
+          <div class="dash-dots">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+          </div>
+          <div class="dash-title">BarberPro Dashboard</div>
+          <div class="dash-badge">● Ao vivo</div>
+        </div>
+
+        <div class="dash-body">
+          <!-- KPIs -->
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-label">Faturamento hoje</div>
+              <div class="kpi-value">R$1.840</div>
+              <div class="kpi-change">↑ +23% vs. ontem</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Ticket médio</div>
+              <div class="kpi-value">R$68</div>
+              <div class="kpi-change">↑ +8% este mês</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Agendamentos</div>
+              <div class="kpi-value">27</div>
+              <div class="kpi-change">↑ 4 novos hoje</div>
+            </div>
+          </div>
+
+          <!-- Chart -->
+          <div class="chart-area">
+            <div class="chart-label">Faturamento — últimos 7 dias</div>
+            <div class="chart-bars">
+              <div class="bar-wrap"><div class="bar" style="height:30px"></div><div class="bar-lbl">Seg</div></div>
+              <div class="bar-wrap"><div class="bar" style="height:48px"></div><div class="bar-lbl">Ter</div></div>
+              <div class="bar-wrap"><div class="bar" style="height:36px"></div><div class="bar-lbl">Qua</div></div>
+              <div class="bar-wrap"><div class="bar active" style="height:56px"></div><div class="bar-lbl">Qui</div></div>
+              <div class="bar-wrap"><div class="bar" style="height:44px"></div><div class="bar-lbl">Sex</div></div>
+              <div class="bar-wrap"><div class="bar active" style="height:60px"></div><div class="bar-lbl">Sáb</div></div>
+              <div class="bar-wrap"><div class="bar" style="height:18px"></div><div class="bar-lbl">Dom</div></div>
+            </div>
+          </div>
+
+          <!-- Appointments -->
+          <div class="appt-row">
+            <div class="appt-item">
+              <div class="appt-time">14:00</div>
+              <div class="appt-avatar">C</div>
+              <div class="appt-name">Carlos M.</div>
+              <div class="appt-service">Corte + Barba</div>
+              <div class="appt-status confirmed">Confirmado ✓</div>
+            </div>
+            <div class="appt-item">
+              <div class="appt-time">14:30</div>
+              <div class="appt-avatar">R</div>
+              <div class="appt-name">Rafael S.</div>
+              <div class="appt-service">Corte degradê</div>
+              <div class="appt-status confirmed">Confirmado ✓</div>
+            </div>
+            <div class="appt-item">
+              <div class="appt-time">15:00</div>
+              <div class="appt-avatar">L</div>
+              <div class="appt-name">Lucas P.</div>
+              <div class="appt-service">Barba completa</div>
+              <div class="appt-status pending">Aguardando</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
