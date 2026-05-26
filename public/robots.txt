@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /obrigado
+Disallow: /afiliados
 
 Sitemap: https://barberpro.lat/sitemap.xml
