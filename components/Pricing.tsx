@@ -16,9 +16,9 @@ import {
 /* ─────────────────────────────────────────────
    Payment URLs
 ───────────────────────────────────────────── */
-const MONTHLY_URL    = "https://pay.cakto.com.br/mv2aj5d_895777";
-const QUARTERLY_URL  = "#"; // TODO: add quarterly Cakto link
-const ANNUAL_URL     = "https://pay.cakto.com.br/gppcti6";
+const MONTHLY_URL    = "https://pay.cakto.com.br/rukuppq_900664";
+const QUARTERLY_URL  = "https://pay.cakto.com.br/geyz34y";
+const ANNUAL_URL     = "https://pay.cakto.com.br/34gc6ai";
 
 /* ─────────────────────────────────────────────
    Plan features
