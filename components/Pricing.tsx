@@ -33,7 +33,7 @@ const monthlyFeatures = [
 
 const quarterlyExtras = [
   "Tudo do plano mensal",
-  "Infraestrutura VPS inclusa",
+  "Infraestrutura VPS",
   "Melhor valor mensal",
   "Prioridade em atualizações",
   "Melhor equilíbrio custo-benefício",
@@ -338,7 +338,7 @@ export function Pricing() {
                 </span>
                 <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/mês</span>
               </div>
-              <p className="text-xs text-[#333] mb-7">VPS não incluso neste plano</p>
+              <p className="text-xs text-[#333] mb-7">VPS não incluso</p>
 
               {/* CTA */}
               <motion.a
@@ -487,7 +487,7 @@ export function Pricing() {
                 >
                   equivalente a R$116/mês
                 </div>
-                <p className="text-xs text-[#333] mb-7">VPS + infraestrutura premium inclusa</p>
+                <p className="text-xs text-[#333] mb-7">VPS + infraestrutura premium</p>
 
                 {/* CTA */}
                 <motion.a
@@ -642,7 +642,7 @@ export function Pricing() {
                 >
                   equivalente a R$125/mês
                 </div>
-                <p className="text-xs text-[#333] mb-7">VPS + infraestrutura premium inclusa</p>
+                <p className="text-xs text-[#333] mb-7">VPS + infraestrutura premium</p>
 
                 {/* CTA */}
                 <motion.a
