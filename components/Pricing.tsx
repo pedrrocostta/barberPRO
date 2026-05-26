@@ -29,11 +29,11 @@ const monthlyFeatures = [
   "WhatsApp automático",
   "Dashboard premium",
   "Clientes ilimitados",
-  "Infraestrutura premium inclusa",
 ];
 
 const quarterlyExtras = [
   "Tudo do plano mensal",
+  "Infraestrutura VPS inclusa",
   "Melhor valor mensal",
   "Prioridade em atualizações",
   "Melhor equilíbrio custo-benefício",
@@ -334,11 +334,11 @@ export function Pricing() {
                   className="text-[44px] lg:text-[50px] font-black text-white leading-none"
                   style={{ letterSpacing: "-0.04em" }}
                 >
-                  R$149
+                  R$99
                 </span>
                 <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/mês</span>
               </div>
-              <p className="text-xs text-[#333] mb-7">Infraestrutura premium inclusa</p>
+              <p className="text-xs text-[#333] mb-7">VPS não incluso neste plano</p>
 
               {/* CTA */}
               <motion.a
@@ -487,7 +487,7 @@ export function Pricing() {
                 >
                   equivalente a R$116/mês
                 </div>
-                <p className="text-xs text-[#333] mb-7">Infraestrutura premium inclusa</p>
+                <p className="text-xs text-[#333] mb-7">VPS + infraestrutura premium inclusa</p>
 
                 {/* CTA */}
                 <motion.a
@@ -642,7 +642,7 @@ export function Pricing() {
                 >
                   equivalente a R$125/mês
                 </div>
-                <p className="text-xs text-[#333] mb-7">Infraestrutura premium inclusa</p>
+                <p className="text-xs text-[#333] mb-7">VPS + infraestrutura premium inclusa</p>
 
                 {/* CTA */}
                 <motion.a
