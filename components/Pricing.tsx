@@ -6,6 +6,7 @@ import {
   Check,
   ArrowRight,
   Sparkles,
+  Flame,
   Globe,
   Smartphone,
   Tablet,
@@ -15,8 +16,9 @@ import {
 /* ─────────────────────────────────────────────
    Payment URLs
 ───────────────────────────────────────────── */
-const MONTHLY_URL = "https://pay.cakto.com.br/mv2aj5d_895777";
-const ANNUAL_URL  = "https://pay.cakto.com.br/gppcti6";
+const MONTHLY_URL    = "https://pay.cakto.com.br/mv2aj5d_895777";
+const QUARTERLY_URL  = "#"; // TODO: add quarterly Cakto link
+const ANNUAL_URL     = "https://pay.cakto.com.br/gppcti6";
 
 /* ─────────────────────────────────────────────
    Plan features
@@ -30,10 +32,17 @@ const monthlyFeatures = [
   "Infraestrutura premium inclusa",
 ];
 
-const annualExtras = [
+const quarterlyExtras = [
   "Tudo do plano mensal",
-  "Melhor custo-benefício",
+  "Melhor valor mensal",
   "Prioridade em atualizações",
+  "Melhor equilíbrio custo-benefício",
+];
+
+const annualExtras = [
+  "Tudo do trimestral",
+  "Prioridade nas personalizações",
+  "Melhor investimento de longo prazo",
 ];
 
 /* ─────────────────────────────────────────────
@@ -84,12 +93,31 @@ const addons = [
 function FeatureItem({
   text,
   delay = 0,
-  highlight = false,
+  accent = "orange",
 }: {
   text: string;
   delay?: number;
-  highlight?: boolean;
+  accent?: "orange" | "gold" | "dim";
 }) {
+  const colors = {
+    orange: {
+      bg: "rgba(255,122,0,0.14)",
+      border: "rgba(255,122,0,0.28)",
+      text: "rgba(255,153,51,0.9)",
+    },
+    gold: {
+      bg: "rgba(201,168,76,0.12)",
+      border: "rgba(201,168,76,0.25)",
+      text: "rgba(201,168,76,0.85)",
+    },
+    dim: {
+      bg: "rgba(255,122,0,0.07)",
+      border: "rgba(255,122,0,0.15)",
+      text: "rgba(179,179,179,1)",
+    },
+  };
+  const c = colors[accent];
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -8 }}
@@ -100,17 +128,11 @@ function FeatureItem({
     >
       <div
         className="w-4 h-4 rounded-full flex items-center justify-center shrink-0"
-        style={{
-          background: highlight ? "rgba(255,122,0,0.22)" : "rgba(255,122,0,0.12)",
-          border: highlight ? "1px solid rgba(255,122,0,0.35)" : "1px solid rgba(255,122,0,0.22)",
-        }}
+        style={{ background: c.bg, border: `1px solid ${c.border}` }}
       >
         <Check className="w-2.5 h-2.5 text-[#FF7A00]" />
       </div>
-      <span
-        className="text-sm"
-        style={{ color: highlight ? "rgba(255,153,51,0.85)" : "rgba(179,179,179,1)" }}
-      >
+      <span className="text-sm leading-snug" style={{ color: c.text }}>
         {text}
       </span>
     </motion.div>
@@ -152,7 +174,6 @@ function AddonCard({
       }}
     >
       <div className="flex items-start justify-between gap-4">
-        {/* Icon + text */}
         <div className="flex items-start gap-3 flex-1 min-w-0">
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
@@ -175,7 +196,6 @@ function AddonCard({
           </div>
         </div>
 
-        {/* Action: CTA link OR toggle switch */}
         {addon.cta ? (
           <motion.a
             href="#"
@@ -186,24 +206,17 @@ function AddonCard({
             whileTap={{ scale: 0.97 }}
             className="shrink-0 text-xs font-semibold text-[#FF7A00] border border-[#FF7A00]/25 px-3 py-1.5 rounded-xl transition-all whitespace-nowrap"
             style={{ background: "rgba(255,122,0,0)" }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "rgba(255,122,0,0.07)")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "rgba(255,122,0,0)")
-            }
+            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,122,0,0.07)")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,122,0,0)")}
           >
             {addon.cta}
           </motion.a>
         ) : (
-          /* Toggle switch */
           <div
             className="shrink-0 w-10 h-6 rounded-full relative"
             style={{
               background: active ? "#FF7A00" : "rgba(255,255,255,0.08)",
-              border: active
-                ? "1px solid #FF7A00"
-                : "1px solid rgba(255,255,255,0.1)",
+              border: active ? "1px solid #FF7A00" : "1px solid rgba(255,255,255,0.1)",
               transition: "background 0.3s ease, border-color 0.3s ease",
             }}
           >
@@ -217,7 +230,6 @@ function AddonCard({
         )}
       </div>
 
-      {/* Price reveal on toggle */}
       <AnimatePresence initial={false}>
         {active && !addon.cta && (
           <motion.div
@@ -255,7 +267,7 @@ export function Pricing() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* ── Section header ── */}
         <motion.div
@@ -276,72 +288,86 @@ export function Pricing() {
             Sem surpresas.
           </h2>
           <p className="text-base lg:text-lg text-[#555] max-w-md mx-auto">
-            Uma plataforma. Uma escolha.
+            Uma plataforma. Três escolhas.
             <br />
             Toda a infraestrutura premium inclusa.
           </p>
         </motion.div>
 
         {/* ── Plans grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5 mb-6 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5 mb-6 items-start">
 
-          {/* ────── MENSAL ────── */}
+          {/* ═══════════════════════════════════
+              MENSAL
+          ═══════════════════════════════════ */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="relative rounded-[24px] p-7 lg:p-8"
-            style={{
-              background:
-                "linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
-              border: "1px solid rgba(255,255,255,0.07)",
-              boxShadow:
-                "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
-            }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
+            style={{ paddingTop: "22px" }}
           >
-            {/* Label */}
-            <div className="text-xs font-semibold text-[#444] uppercase tracking-[0.14em] mb-7">
-              Mensal
-            </div>
+            {/* Spacer to align with badged cards */}
+            <div className="h-[22px] hidden md:block" />
 
-            {/* Price */}
-            <div className="mb-1">
-              <span
-                className="text-[52px] lg:text-[58px] font-black text-white leading-none"
-                style={{ letterSpacing: "-0.04em" }}
-              >
-                R$149
-              </span>
-              <span className="text-[#444] text-base font-medium ml-2">/mês</span>
-            </div>
-            <p className="text-xs text-[#3A3A3A] mb-8">Infraestrutura premium inclusa</p>
-
-            {/* CTA */}
-            <motion.a
-              href={MONTHLY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full py-3.5 rounded-2xl text-sm font-bold mb-8 flex items-center justify-center gap-2 text-white btn-secondary"
+            <motion.div
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-[22px] p-6 lg:p-7 h-full"
+              style={{
+                background:
+                  "linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                boxShadow:
+                  "0 8px 32px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.04)",
+              }}
             >
-              Começar agora
-              <ArrowRight className="w-4 h-4" />
-            </motion.a>
+              {/* Label */}
+              <div className="text-[11px] font-semibold text-[#3A3A3A] uppercase tracking-[0.15em] mb-6">
+                Mensal
+              </div>
 
-            {/* Divider */}
-            <div className="h-px bg-white/[0.04] mb-7" />
+              {/* Price */}
+              <div className="mb-1">
+                <span
+                  className="text-[44px] lg:text-[50px] font-black text-white leading-none"
+                  style={{ letterSpacing: "-0.04em" }}
+                >
+                  R$149
+                </span>
+                <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/mês</span>
+              </div>
+              <p className="text-xs text-[#333] mb-7">Infraestrutura premium inclusa</p>
 
-            {/* Features */}
-            <div className="space-y-3.5">
-              {monthlyFeatures.map((f, i) => (
-                <FeatureItem key={i} text={f} delay={i * 0.05} />
-              ))}
-            </div>
+              {/* CTA */}
+              <motion.a
+                href={MONTHLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full py-3 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white btn-secondary"
+              >
+                Começar agora
+                <ArrowRight className="w-3.5 h-3.5" />
+              </motion.a>
+
+              {/* Divider */}
+              <div className="h-px bg-white/[0.04] mb-6" />
+
+              {/* Features */}
+              <div className="space-y-3">
+                {monthlyFeatures.map((f, i) => (
+                  <FeatureItem key={i} text={f} delay={i * 0.04} accent="dim" />
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
 
-          {/* ────── ANUAL ────── */}
+          {/* ═══════════════════════════════════
+              TRIMESTRAL — HERO
+          ═══════════════════════════════════ */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -350,40 +376,40 @@ export function Pricing() {
             className="relative"
             style={{ paddingTop: "22px" }}
           >
-            {/* RECOMENDADO badge — outside card */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap">
+            {/* MAIS ESCOLHIDO badge */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 z-30 whitespace-nowrap">
               <div
                 className="text-white text-[11px] font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5"
                 style={{
                   background:
-                    "linear-gradient(135deg, #FF8C1A 0%, #FF7A00 50%, #E06D00 100%)",
+                    "linear-gradient(135deg, #FF8C1A 0%, #FF7A00 55%, #E06D00 100%)",
                   boxShadow:
-                    "0 0 22px rgba(255,122,0,0.55), 0 4px 12px rgba(0,0,0,0.3)",
+                    "0 0 28px rgba(255,122,0,0.65), 0 4px 14px rgba(0,0,0,0.35)",
                 }}
               >
-                <Sparkles className="w-3 h-3" />
-                RECOMENDADO
+                <Flame className="w-3 h-3" />
+                MAIS ESCOLHIDO
               </div>
             </div>
 
-            {/* Breathing ambient glow */}
+            {/* Breathing ambient glow — stronger for hero */}
             <motion.div
-              animate={{ opacity: [0.28, 0.58, 0.28] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -inset-5 rounded-[36px] pointer-events-none"
+              animate={{ opacity: [0.32, 0.65, 0.32] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -inset-6 rounded-[40px] pointer-events-none"
               style={{
                 background:
-                  "radial-gradient(ellipse at center, rgba(255,122,0,0.15) 0%, transparent 70%)",
+                  "radial-gradient(ellipse at center, rgba(255,122,0,0.2) 0%, transparent 68%)",
               }}
             />
 
             {/* Card */}
             <div
-              className="relative rounded-[24px] overflow-hidden"
+              className="relative rounded-[22px] overflow-hidden"
               style={{
-                border: "1px solid rgba(255,122,0,0.32)",
+                border: "1px solid rgba(255,122,0,0.38)",
                 boxShadow:
-                  "0 0 0 1px rgba(255,122,0,0.06), 0 24px 64px rgba(0,0,0,0.55), 0 0 32px rgba(255,122,0,0.1)",
+                  "0 0 0 1px rgba(255,122,0,0.07), 0 24px 64px rgba(0,0,0,0.55), 0 0 40px rgba(255,122,0,0.14)",
               }}
             >
               {/* Living line — top edge */}
@@ -392,21 +418,21 @@ export function Pricing() {
                 style={{ height: "1px", zIndex: 10 }}
               >
                 <motion.div
-                  animate={{ x: ["-120%", "320%"] }}
+                  animate={{ x: ["-130%", "330%"] }}
                   transition={{
-                    duration: 4.5,
+                    duration: 4,
                     repeat: Infinity,
-                    repeatDelay: 3.5,
+                    repeatDelay: 3,
                     ease: "easeInOut",
                   }}
                   style={{
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    width: "28%",
+                    width: "30%",
                     height: "100%",
                     background:
-                      "linear-gradient(90deg, transparent, rgba(255,180,80,0.65), rgba(255,240,200,0.5), rgba(255,180,80,0.65), transparent)",
+                      "linear-gradient(90deg, transparent, rgba(255,180,80,0.7), rgba(255,240,200,0.55), rgba(255,180,80,0.7), transparent)",
                   }}
                 />
               </div>
@@ -416,28 +442,183 @@ export function Pricing() {
                 className="absolute inset-0"
                 style={{
                   background:
-                    "linear-gradient(150deg, rgba(255,122,0,0.09) 0%, #120C00 35%, #0F0F0F 100%)",
+                    "linear-gradient(155deg, rgba(255,122,0,0.12) 0%, #130D00 30%, #0F0F0F 100%)",
                 }}
               />
               <div
                 className="absolute inset-0"
                 style={{
                   background:
-                    "radial-gradient(ellipse 80% 45% at 50% 0%, rgba(255,122,0,0.11) 0%, transparent 60%)",
+                    "radial-gradient(ellipse 90% 50% at 50% 0%, rgba(255,122,0,0.14) 0%, transparent 65%)",
                 }}
               />
 
-              <div className="relative z-10 p-7 lg:p-8">
-                {/* Header */}
-                <div className="flex items-center justify-between mb-7">
-                  <div className="text-xs font-semibold text-[#FF7A00]/60 uppercase tracking-[0.14em]">
+              <div className="relative z-10 p-6 lg:p-7">
+                {/* Header row */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="text-[11px] font-semibold text-[#FF7A00]/65 uppercase tracking-[0.15em]">
+                    Trimestral
+                  </div>
+                  <div
+                    className="text-[11px] font-bold px-2.5 py-1 rounded-full"
+                    style={{
+                      background: "rgba(255,122,0,0.12)",
+                      border: "1px solid rgba(255,122,0,0.25)",
+                      color: "#FF9940",
+                    }}
+                  >
+                    Economize R$97
+                  </div>
+                </div>
+
+                {/* Price */}
+                <div className="mb-1">
+                  <span
+                    className="text-[44px] lg:text-[50px] font-black text-white leading-none"
+                    style={{ letterSpacing: "-0.04em" }}
+                  >
+                    R$350
+                  </span>
+                  <span className="text-[#555] text-sm font-medium ml-1.5">/trimestre</span>
+                </div>
+                <div
+                  className="text-xs font-medium mb-1"
+                  style={{ color: "rgba(255,122,0,0.6)" }}
+                >
+                  equivalente a R$116/mês
+                </div>
+                <p className="text-xs text-[#333] mb-7">Infraestrutura premium inclusa</p>
+
+                {/* CTA */}
+                <motion.a
+                  href={QUARTERLY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 btn-primary text-white shadow-[0_0_32px_rgba(255,122,0,0.35)]"
+                >
+                  Assinar agora
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </motion.a>
+
+                {/* Divider */}
+                <div
+                  className="h-px mb-6"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, transparent, rgba(255,122,0,0.25), transparent)",
+                  }}
+                />
+
+                {/* Monthly features */}
+                <div className="space-y-3">
+                  {monthlyFeatures.map((f, i) => (
+                    <FeatureItem key={i} text={f} delay={i * 0.04} accent="dim" />
+                  ))}
+                </div>
+
+                {/* Quarterly extras */}
+                <div
+                  className="mt-4 pt-4 space-y-3"
+                  style={{ borderTop: "1px solid rgba(255,122,0,0.12)" }}
+                >
+                  {quarterlyExtras.map((f, i) => (
+                    <FeatureItem key={i} text={f} delay={0.3 + i * 0.05} accent="orange" />
+                  ))}
+                </div>
+
+                {/* Microcopy */}
+                <p
+                  className="mt-5 text-[11px] leading-relaxed text-center"
+                  style={{ color: "rgba(255,122,0,0.38)" }}
+                >
+                  O plano preferido pelas barbearias que desejam<br />
+                  crescer com previsibilidade.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ═══════════════════════════════════
+              ANUAL — PREMIUM
+          ═══════════════════════════════════ */}
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
+            style={{ paddingTop: "22px" }}
+          >
+            {/* MELHOR VALOR badge */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 z-30 whitespace-nowrap">
+              <div
+                className="text-[11px] font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%)",
+                  border: "1px solid rgba(201,168,76,0.35)",
+                  color: "#C9A84C",
+                  boxShadow: "0 0 18px rgba(201,168,76,0.18), 0 2px 8px rgba(0,0,0,0.3)",
+                }}
+              >
+                <Sparkles className="w-3 h-3" />
+                MELHOR VALOR
+              </div>
+            </div>
+
+            {/* Subtle warm ambient glow */}
+            <motion.div
+              animate={{ opacity: [0.18, 0.38, 0.18] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -inset-4 rounded-[38px] pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, rgba(201,168,76,0.10) 0%, transparent 70%)",
+              }}
+            />
+
+            <motion.div
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="relative rounded-[22px] overflow-hidden h-full"
+              style={{
+                border: "1px solid rgba(201,168,76,0.18)",
+                boxShadow:
+                  "0 0 0 1px rgba(201,168,76,0.04), 0 20px 52px rgba(0,0,0,0.48), 0 0 24px rgba(201,168,76,0.06)",
+              }}
+            >
+              {/* Card bg */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(150deg, rgba(201,168,76,0.07) 0%, #0F0C00 28%, #0F0F0F 100%)",
+                }}
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%)",
+                }}
+              />
+
+              <div className="relative z-10 p-6 lg:p-7">
+                {/* Header row */}
+                <div className="flex items-center justify-between mb-6">
+                  <div
+                    className="text-[11px] font-semibold uppercase tracking-[0.15em]"
+                    style={{ color: "rgba(201,168,76,0.6)" }}
+                  >
                     Anual
                   </div>
                   <div
-                    className="text-xs font-bold px-2.5 py-1 rounded-full"
+                    className="text-[11px] font-bold px-2.5 py-1 rounded-full"
                     style={{
-                      background: "rgba(52,211,153,0.10)",
-                      border: "1px solid rgba(52,211,153,0.20)",
+                      background: "rgba(52,211,153,0.08)",
+                      border: "1px solid rgba(52,211,153,0.18)",
                       color: "#34d399",
                     }}
                   >
@@ -448,20 +629,20 @@ export function Pricing() {
                 {/* Price */}
                 <div className="mb-1">
                   <span
-                    className="text-[52px] lg:text-[58px] font-black text-white leading-none"
+                    className="text-[44px] lg:text-[50px] font-black text-white leading-none"
                     style={{ letterSpacing: "-0.04em" }}
                   >
                     R$1.500
                   </span>
-                  <span className="text-[#555] text-base font-medium ml-2">/ano</span>
+                  <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/ano</span>
                 </div>
                 <div
                   className="text-xs font-medium mb-1"
-                  style={{ color: "rgba(255,122,0,0.55)" }}
+                  style={{ color: "rgba(201,168,76,0.5)" }}
                 >
                   equivalente a R$125/mês
                 </div>
-                <p className="text-xs text-[#3A3A3A] mb-8">Infraestrutura premium inclusa</p>
+                <p className="text-xs text-[#333] mb-7">Infraestrutura premium inclusa</p>
 
                 {/* CTA */}
                 <motion.a
@@ -470,44 +651,58 @@ export function Pricing() {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full py-4 rounded-2xl text-sm font-bold mb-8 flex items-center justify-center gap-2 btn-primary text-white shadow-[0_0_28px_rgba(255,122,0,0.3)]"
+                  className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.08) 100%)",
+                    border: "1px solid rgba(201,168,76,0.28)",
+                    boxShadow: "0 0 18px rgba(201,168,76,0.1)",
+                    transition: "all 0.25s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.boxShadow =
+                      "0 0 28px rgba(201,168,76,0.2)";
+                    (e.currentTarget as HTMLElement).style.borderColor =
+                      "rgba(201,168,76,0.42)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.boxShadow =
+                      "0 0 18px rgba(201,168,76,0.1)";
+                    (e.currentTarget as HTMLElement).style.borderColor =
+                      "rgba(201,168,76,0.28)";
+                  }}
                 >
                   Solicitar acesso
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </motion.a>
 
                 {/* Divider */}
                 <div
-                  className="h-px mb-7"
+                  className="h-px mb-6"
                   style={{
                     background:
-                      "linear-gradient(90deg, transparent, rgba(255,122,0,0.22), transparent)",
+                      "linear-gradient(90deg, transparent, rgba(201,168,76,0.18), transparent)",
                   }}
                 />
 
                 {/* Monthly features */}
-                <div className="space-y-3.5">
+                <div className="space-y-3">
                   {monthlyFeatures.map((f, i) => (
-                    <FeatureItem key={i} text={f} delay={i * 0.04} />
+                    <FeatureItem key={i} text={f} delay={i * 0.04} accent="dim" />
                   ))}
                 </div>
 
                 {/* Annual extras */}
                 <div
-                  className="mt-5 pt-5 space-y-3.5"
-                  style={{ borderTop: "1px solid rgba(255,122,0,0.12)" }}
+                  className="mt-4 pt-4 space-y-3"
+                  style={{ borderTop: "1px solid rgba(201,168,76,0.10)" }}
                 >
                   {annualExtras.map((f, i) => (
-                    <FeatureItem
-                      key={i}
-                      text={f}
-                      delay={0.35 + i * 0.05}
-                      highlight
-                    />
+                    <FeatureItem key={i} text={f} delay={0.3 + i * 0.05} accent="gold" />
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
 
@@ -517,7 +712,7 @@ export function Pricing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.25 }}
-          className="text-center text-sm text-[#3A3A3A] mb-20 lg:mb-24 px-4"
+          className="text-center text-sm text-[#333] mb-20 lg:mb-24 px-4"
         >
           A equipe Barberpro adapta a solução de acordo com a operação da sua barbearia.
         </motion.p>
