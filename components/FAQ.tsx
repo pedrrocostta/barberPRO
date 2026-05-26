@@ -10,40 +10,44 @@ const faqs = [
     a: "Não. O BarberPro foi desenvolvido para ser simples e intuitivo. Em menos de 10 minutos você já está configurado e aceitando agendamentos. Temos tutoriais em vídeo e suporte via WhatsApp para te ajudar em cada etapa.",
   },
   {
+    q: "O que é o VPS e por que eu precisaria dele?",
+    a: "O VPS (Servidor Virtual Privado) é a infraestrutura onde sua plataforma BarberPro fica hospedada. Com o VPS, seu sistema roda de forma independente, com mais velocidade, estabilidade e segurança. Nos planos Mensal e Trimestral o VPS é opcional e pode ser contratado como add-on. No plano Anual, o VPS já está incluso sem custo adicional.",
+  },
+  {
+    q: "Posso mudar de plano depois?",
+    a: "Sim, a qualquer momento. Se quiser fazer upgrade do Mensal para o Trimestral ou Anual, basta entrar em contato com nossa equipe — o valor já pago é descontado proporcionalmente. Downgrade também é possível ao final do período vigente.",
+  },
+  {
+    q: "O plano Anual realmente inclui VPS, Domínio e Onboarding?",
+    a: "Sim. No plano Anual (R$1.500/ano) você recebe: infraestrutura VPS dedicada, domínio personalizado para sua barbearia e uma sessão de onboarding assistido com nossa equipe para configurar tudo do zero. São benefícios que somam mais de R$600 em valor avulso.",
+  },
+  {
+    q: "Como funciona o Onboarding assistido?",
+    a: "É uma sessão com nossa equipe técnica (via videochamada ou WhatsApp) onde configuramos o sistema juntos: serviços, barbeiros, agenda, integração com WhatsApp e identidade visual. Disponível para clientes do plano Anual. Para os demais planos, oferecemos suporte guiado por tutoriais e chat.",
+  },
+  {
     q: "Funciona no celular?",
     a: "Sim! O BarberPro tem app para iOS e Android. Você pode gerenciar sua agenda, ver relatórios, confirmar agendamentos e acompanhar tudo pelo celular — em qualquer lugar.",
   },
   {
     q: "Como funciona o WhatsApp automático?",
-    a: "Conectamos sua conta do WhatsApp ao sistema. Quando um cliente agenda, ele recebe uma confirmação automática. No dia anterior, ele recebe um lembrete. Você não precisa fazer nada — é 100% automático.",
+    a: "Conectamos sua conta do WhatsApp ao sistema. Quando um cliente agenda, ele recebe uma confirmação automática. No dia anterior, recebe um lembrete. Você não precisa fazer nada — é 100% automático.",
   },
   {
     q: "Posso usar com mais de um barbeiro?",
-    a: "Sim! No plano Pro você pode ter até 5 barbeiros, cada um com sua própria agenda, perfil e relatório de comissões. No plano Max, barbeiros ilimitados e suporte a múltiplas unidades.",
-  },
-  {
-    q: "Como funciona o período de teste gratuito?",
-    a: "Você tem 14 dias de acesso completo ao plano Pro, sem precisar colocar cartão de crédito. No final do período, você escolhe o plano que preferir ou cancela sem custo algum.",
+    a: "Sim! Todos os planos suportam múltiplos barbeiros, cada um com sua própria agenda, perfil e relatório de comissões. Não há limite de profissionais cadastrados.",
   },
   {
     q: "Meus clientes precisam criar conta para agendar?",
-    a: "Não. Os clientes agendam pelo seu link personalizado (ex: barberpro.com.br/suabarbearia) sem precisar criar conta. É simples e rápido — o cliente escolhe o serviço, horário e confirma.",
-  },
-  {
-    q: "Posso migrar minha agenda atual para o BarberPro?",
-    a: "Sim. Nossa equipe te ajuda a importar os dados dos clientes (via planilha Excel, Google Sheets ou CSV). A migração é feita pela equipe de suporte, sem custo adicional.",
-  },
-  {
-    q: "O sistema funciona offline?",
-    a: "O app mobile tem modo offline parcial para visualização da agenda. Para novas ações (criar agendamentos, confirmar, enviar mensagens), é necessária conexão com a internet.",
+    a: "Não. Os clientes agendam pelo seu link personalizado sem precisar criar conta. É simples e rápido — o cliente escolhe o serviço, horário e confirma em menos de 1 minuto.",
   },
   {
     q: "Consigo cancelar quando quiser?",
-    a: "Sim, sem multa ou burocracia. Você cancela direto pelo painel, a qualquer momento. Se cancelar no meio do mês, você continua com acesso até o fim do período pago.",
+    a: "Sim, sem multa ou burocracia. Você cancela direto pelo painel, a qualquer momento. Se cancelar no meio do período, você continua com acesso até o fim do ciclo pago.",
   },
   {
     q: "Quais formas de pagamento são aceitas?",
-    a: "Aceitamos cartão de crédito (Visa, Mastercard, Amex, Elo), boleto bancário e PIX. No plano anual, é possível parcelar em até 12x no cartão.",
+    a: "Aceitamos cartão de crédito (Visa, Mastercard, Amex, Elo), boleto bancário e PIX. No plano Anual, é possível parcelar em até 12x no cartão.",
   },
 ];
 

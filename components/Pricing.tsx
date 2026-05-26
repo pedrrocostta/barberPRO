@@ -11,14 +11,16 @@ import {
   Smartphone,
   Tablet,
   Wand2,
+  Server,
+  Gift,
 } from "lucide-react";
 
 /* ─────────────────────────────────────────────
    Payment URLs
 ───────────────────────────────────────────── */
-const MONTHLY_URL    = "https://pay.cakto.com.br/rukuppq_900664";
-const QUARTERLY_URL  = "https://pay.cakto.com.br/geyz34y";
-const ANNUAL_URL     = "https://pay.cakto.com.br/34gc6ai";
+const MONTHLY_URL   = "https://pay.cakto.com.br/rukuppq_900664";
+const QUARTERLY_URL = "https://pay.cakto.com.br/geyz34y";
+const ANNUAL_URL    = "https://pay.cakto.com.br/34gc6ai";
 
 /* ─────────────────────────────────────────────
    Plan features
@@ -33,7 +35,6 @@ const monthlyFeatures = [
 
 const quarterlyExtras = [
   "Tudo do plano mensal",
-  "Infraestrutura VPS",
   "Melhor valor mensal",
   "Prioridade em atualizações",
   "Melhor equilíbrio custo-benefício",
@@ -45,15 +46,31 @@ const annualExtras = [
   "Melhor investimento de longo prazo",
 ];
 
+/* Bônus inclusos apenas no anual */
+const annualBundle = [
+  { icon: Server, label: "VPS + infraestrutura premium" },
+  { icon: Globe,  label: "Domínio personalizado" },
+  { icon: Gift,   label: "Onboarding assistido pela equipe" },
+];
+
 /* ─────────────────────────────────────────────
    Add-ons
 ───────────────────────────────────────────── */
 const addons = [
   {
+    id: "vps",
+    Icon: Server,
+    title: "Hospedagem VPS",
+    desc: "Infraestrutura dedicada e premium para sua plataforma BarberPro. Incluso gratuitamente no plano Anual.",
+    price: "",
+    period: "",
+    cta: "Consultar valor",
+  },
+  {
     id: "domain",
     Icon: Globe,
     title: "Domínio personalizado",
-    desc: "Acesse com seu próprio domínio. Identidade completa para sua barbearia.",
+    desc: "Acesse com seu próprio domínio. Identidade completa para sua barbearia. Incluso no plano Anual.",
     price: "R$50",
     period: "/mês",
     cta: null,
@@ -93,28 +110,16 @@ const addons = [
 function FeatureItem({
   text,
   delay = 0,
-  accent = "orange",
+  accent = "dim",
 }: {
   text: string;
   delay?: number;
   accent?: "orange" | "gold" | "dim";
 }) {
   const colors = {
-    orange: {
-      bg: "rgba(255,122,0,0.14)",
-      border: "rgba(255,122,0,0.28)",
-      text: "rgba(255,153,51,0.9)",
-    },
-    gold: {
-      bg: "rgba(201,168,76,0.12)",
-      border: "rgba(201,168,76,0.25)",
-      text: "rgba(201,168,76,0.85)",
-    },
-    dim: {
-      bg: "rgba(255,122,0,0.07)",
-      border: "rgba(255,122,0,0.15)",
-      text: "rgba(179,179,179,1)",
-    },
+    orange: { bg: "rgba(255,122,0,0.14)", border: "rgba(255,122,0,0.28)", text: "rgba(255,153,51,0.9)" },
+    gold:   { bg: "rgba(201,168,76,0.12)", border: "rgba(201,168,76,0.25)", text: "rgba(201,168,76,0.85)" },
+    dim:    { bg: "rgba(255,122,0,0.07)", border: "rgba(255,122,0,0.15)", text: "rgba(179,179,179,1)" },
   };
   const c = colors[accent];
 
@@ -142,13 +147,7 @@ function FeatureItem({
 /* ─────────────────────────────────────────────
    Add-on card with toggle
 ───────────────────────────────────────────── */
-function AddonCard({
-  addon,
-  index,
-}: {
-  addon: (typeof addons)[number];
-  index: number;
-}) {
+function AddonCard({ addon, index }: { addon: (typeof addons)[number]; index: number }) {
   const [active, setActive] = useState(false);
   const { Icon } = addon;
 
@@ -157,20 +156,17 @@ function AddonCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.09, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ delay: index * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       onClick={() => !addon.cta && setActive(!active)}
-      className={`relative rounded-2xl p-5 transition-all duration-350 ${!addon.cta ? "cursor-pointer" : "cursor-default"}`}
+      className={`relative rounded-2xl p-5 transition-all duration-300 ${!addon.cta ? "cursor-pointer" : "cursor-default"}`}
       style={{
         background: active
           ? "linear-gradient(135deg, rgba(255,122,0,0.07) 0%, rgba(255,122,0,0.02) 100%)"
           : "rgba(255,255,255,0.018)",
-        border: active
-          ? "1px solid rgba(255,122,0,0.32)"
-          : "1px solid rgba(255,255,255,0.055)",
+        border: active ? "1px solid rgba(255,122,0,0.32)" : "1px solid rgba(255,255,255,0.055)",
         boxShadow: active
           ? "0 0 24px rgba(255,122,0,0.07), inset 0 1px 0 rgba(255,255,255,0.04)"
           : "inset 0 1px 0 rgba(255,255,255,0.025)",
-        transition: "background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
       }}
     >
       <div className="flex items-start justify-between gap-4">
@@ -179,16 +175,11 @@ function AddonCard({
             className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
             style={{
               background: active ? "rgba(255,122,0,0.14)" : "rgba(255,255,255,0.04)",
-              border: active
-                ? "1px solid rgba(255,122,0,0.22)"
-                : "1px solid rgba(255,255,255,0.06)",
-              transition: "background 0.3s ease, border-color 0.3s ease",
+              border: active ? "1px solid rgba(255,122,0,0.22)" : "1px solid rgba(255,255,255,0.06)",
+              transition: "all 0.3s ease",
             }}
           >
-            <Icon
-              className="w-4 h-4 transition-colors duration-300"
-              style={{ color: active ? "#FF7A00" : "#555" }}
-            />
+            <Icon className="w-4 h-4 transition-colors duration-300" style={{ color: active ? "#FF7A00" : "#555" }} />
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-sm font-semibold text-white mb-1">{addon.title}</div>
@@ -199,10 +190,7 @@ function AddonCard({
         {addon.cta ? (
           <motion.a
             href="#"
-            onClick={(e) => {
-              e.stopPropagation();
-              document.getElementById("cta")?.scrollIntoView({ behavior: "smooth" });
-            }}
+            onClick={(e) => { e.stopPropagation(); document.getElementById("cta")?.scrollIntoView({ behavior: "smooth" }); }}
             whileTap={{ scale: 0.97 }}
             className="shrink-0 text-xs font-semibold text-[#FF7A00] border border-[#FF7A00]/25 px-3 py-1.5 rounded-xl transition-all whitespace-nowrap"
             style={{ background: "rgba(255,122,0,0)" }}
@@ -217,7 +205,7 @@ function AddonCard({
             style={{
               background: active ? "#FF7A00" : "rgba(255,255,255,0.08)",
               border: active ? "1px solid #FF7A00" : "1px solid rgba(255,255,255,0.1)",
-              transition: "background 0.3s ease, border-color 0.3s ease",
+              transition: "all 0.3s ease",
             }}
           >
             <motion.div
@@ -243,9 +231,7 @@ function AddonCard({
               <span className="text-xs text-[#444]">Valor do recurso</span>
               <div className="flex items-baseline gap-1">
                 <span className="text-xl font-black text-[#FF7A00]">{addon.price}</span>
-                {addon.period && (
-                  <span className="text-xs text-[#555]">{addon.period}</span>
-                )}
+                {addon.period && <span className="text-xs text-[#555]">{addon.period}</span>}
               </div>
             </div>
           </motion.div>
@@ -261,7 +247,6 @@ function AddonCard({
 export function Pricing() {
   return (
     <section id="planos" className="py-16 lg:py-28 relative overflow-hidden">
-      {/* Backgrounds */}
       <div className="absolute inset-0 bg-[#0D0D0D]" />
       <div className="absolute inset-0 orange-gradient-bg pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
@@ -290,16 +275,14 @@ export function Pricing() {
           <p className="text-base lg:text-lg text-[#555] max-w-md mx-auto">
             Uma plataforma. Três escolhas.
             <br />
-            Toda a infraestrutura premium inclusa.
+            Toda a infraestrutura premium à sua disposição.
           </p>
         </motion.div>
 
         {/* ── Plans grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5 mb-6 items-start">
 
-          {/* ═══════════════════════════════════
-              MENSAL
-          ═══════════════════════════════════ */}
+          {/* ═══════════════════════ MENSAL ═══════════════════════ */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -308,39 +291,29 @@ export function Pricing() {
             className="relative"
             style={{ paddingTop: "22px" }}
           >
-            {/* Spacer to align with badged cards */}
+            {/* Spacer to align with badged cards on desktop */}
             <div className="h-[22px] hidden md:block" />
 
             <motion.div
               whileHover={{ y: -3 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="rounded-[22px] p-6 lg:p-7 h-full"
+              className="rounded-[22px] p-6 lg:p-7"
               style={{
-                background:
-                  "linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
+                background: "linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
                 border: "1px solid rgba(255,255,255,0.07)",
-                boxShadow:
-                  "0 8px 32px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.04)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.04)",
               }}
             >
-              {/* Label */}
-              <div className="text-[11px] font-semibold text-[#3A3A3A] uppercase tracking-[0.15em] mb-6">
-                Mensal
-              </div>
+              <div className="text-[11px] font-semibold text-[#3A3A3A] uppercase tracking-[0.15em] mb-6">Mensal</div>
 
-              {/* Price */}
               <div className="mb-1">
-                <span
-                  className="text-[44px] lg:text-[50px] font-black text-white leading-none"
-                  style={{ letterSpacing: "-0.04em" }}
-                >
+                <span className="text-[44px] lg:text-[50px] font-black text-white leading-none" style={{ letterSpacing: "-0.04em" }}>
                   R$99
                 </span>
                 <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/mês</span>
               </div>
-              <p className="text-xs text-[#333] mb-7">VPS não incluso</p>
+              <p className="text-xs text-[#333] mb-7">VPS disponível como add-on</p>
 
-              {/* CTA */}
               <motion.a
                 href={MONTHLY_URL}
                 target="_blank"
@@ -353,10 +326,8 @@ export function Pricing() {
                 <ArrowRight className="w-3.5 h-3.5" />
               </motion.a>
 
-              {/* Divider */}
               <div className="h-px bg-white/[0.04] mb-6" />
 
-              {/* Features */}
               <div className="space-y-3">
                 {monthlyFeatures.map((f, i) => (
                   <FeatureItem key={i} text={f} delay={i * 0.04} accent="dim" />
@@ -365,9 +336,7 @@ export function Pricing() {
             </motion.div>
           </motion.div>
 
-          {/* ═══════════════════════════════════
-              TRIMESTRAL — HERO
-          ═══════════════════════════════════ */}
+          {/* ═══════════════════════ TRIMESTRAL — HERO ═══════════════════════ */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -376,15 +345,13 @@ export function Pricing() {
             className="relative"
             style={{ paddingTop: "22px" }}
           >
-            {/* MAIS ESCOLHIDO badge */}
+            {/* Badge */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 z-30 whitespace-nowrap">
               <div
                 className="text-white text-[11px] font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5"
                 style={{
-                  background:
-                    "linear-gradient(135deg, #FF8C1A 0%, #FF7A00 55%, #E06D00 100%)",
-                  boxShadow:
-                    "0 0 28px rgba(255,122,0,0.65), 0 4px 14px rgba(0,0,0,0.35)",
+                  background: "linear-gradient(135deg, #FF8C1A 0%, #FF7A00 55%, #E06D00 100%)",
+                  boxShadow: "0 0 28px rgba(255,122,0,0.65), 0 4px 14px rgba(0,0,0,0.35)",
                 }}
               >
                 <Flame className="w-3 h-3" />
@@ -392,104 +359,58 @@ export function Pricing() {
               </div>
             </div>
 
-            {/* Breathing ambient glow — stronger for hero */}
+            {/* Breathing glow */}
             <motion.div
               animate={{ opacity: [0.32, 0.65, 0.32] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               className="absolute -inset-6 rounded-[40px] pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(255,122,0,0.2) 0%, transparent 68%)",
-              }}
+              style={{ background: "radial-gradient(ellipse at center, rgba(255,122,0,0.2) 0%, transparent 68%)" }}
             />
 
-            {/* Card */}
             <div
               className="relative rounded-[22px] overflow-hidden"
               style={{
                 border: "1px solid rgba(255,122,0,0.38)",
-                boxShadow:
-                  "0 0 0 1px rgba(255,122,0,0.07), 0 24px 64px rgba(0,0,0,0.55), 0 0 40px rgba(255,122,0,0.14)",
+                boxShadow: "0 0 0 1px rgba(255,122,0,0.07), 0 24px 64px rgba(0,0,0,0.55), 0 0 40px rgba(255,122,0,0.14)",
               }}
             >
-              {/* Living line — top edge */}
-              <div
-                className="absolute top-0 left-0 right-0 pointer-events-none overflow-hidden"
-                style={{ height: "1px", zIndex: 10 }}
-              >
+              {/* Living line */}
+              <div className="absolute top-0 left-0 right-0 overflow-hidden pointer-events-none" style={{ height: "1px", zIndex: 10 }}>
                 <motion.div
                   animate={{ x: ["-130%", "330%"] }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    repeatDelay: 3,
-                    ease: "easeInOut",
-                  }}
+                  transition={{ duration: 4, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }}
                   style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "30%",
-                    height: "100%",
-                    background:
-                      "linear-gradient(90deg, transparent, rgba(255,180,80,0.7), rgba(255,240,200,0.55), rgba(255,180,80,0.7), transparent)",
+                    position: "absolute", top: 0, left: 0, width: "30%", height: "100%",
+                    background: "linear-gradient(90deg, transparent, rgba(255,180,80,0.7), rgba(255,240,200,0.55), rgba(255,180,80,0.7), transparent)",
                   }}
                 />
               </div>
 
-              {/* Card bg */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(155deg, rgba(255,122,0,0.12) 0%, #130D00 30%, #0F0F0F 100%)",
-                }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "radial-gradient(ellipse 90% 50% at 50% 0%, rgba(255,122,0,0.14) 0%, transparent 65%)",
-                }}
-              />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(155deg, rgba(255,122,0,0.12) 0%, #130D00 30%, #0F0F0F 100%)" }} />
+              <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 50% at 50% 0%, rgba(255,122,0,0.14) 0%, transparent 65%)" }} />
 
               <div className="relative z-10 p-6 lg:p-7">
-                {/* Header row */}
                 <div className="flex items-center justify-between mb-6">
-                  <div className="text-[11px] font-semibold text-[#FF7A00]/65 uppercase tracking-[0.15em]">
-                    Trimestral
-                  </div>
+                  <div className="text-[11px] font-semibold text-[#FF7A00]/65 uppercase tracking-[0.15em]">Trimestral</div>
                   <div
                     className="text-[11px] font-bold px-2.5 py-1 rounded-full"
-                    style={{
-                      background: "rgba(255,122,0,0.12)",
-                      border: "1px solid rgba(255,122,0,0.25)",
-                      color: "#FF9940",
-                    }}
+                    style={{ background: "rgba(255,122,0,0.12)", border: "1px solid rgba(255,122,0,0.25)", color: "#FF9940" }}
                   >
-                    Economize R$97
+                    Economize R$47
                   </div>
                 </div>
 
-                {/* Price */}
                 <div className="mb-1">
-                  <span
-                    className="text-[44px] lg:text-[50px] font-black text-white leading-none"
-                    style={{ letterSpacing: "-0.04em" }}
-                  >
-                    R$350
+                  <span className="text-[44px] lg:text-[50px] font-black text-white leading-none" style={{ letterSpacing: "-0.04em" }}>
+                    R$250
                   </span>
                   <span className="text-[#555] text-sm font-medium ml-1.5">/trimestre</span>
                 </div>
-                <div
-                  className="text-xs font-medium mb-1"
-                  style={{ color: "rgba(255,122,0,0.6)" }}
-                >
-                  equivalente a R$116/mês
+                <div className="text-xs font-medium mb-1" style={{ color: "rgba(255,122,0,0.6)" }}>
+                  equivalente a R$83/mês
                 </div>
-                <p className="text-xs text-[#333] mb-7">VPS + infraestrutura premium</p>
+                <p className="text-xs text-[#333] mb-7">VPS disponível como add-on</p>
 
-                {/* CTA */}
                 <motion.a
                   href={QUARTERLY_URL}
                   target="_blank"
@@ -502,47 +423,28 @@ export function Pricing() {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </motion.a>
 
-                {/* Divider */}
-                <div
-                  className="h-px mb-6"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, transparent, rgba(255,122,0,0.25), transparent)",
-                  }}
-                />
+                <div className="h-px mb-6" style={{ background: "linear-gradient(90deg, transparent, rgba(255,122,0,0.25), transparent)" }} />
 
-                {/* Monthly features */}
                 <div className="space-y-3">
                   {monthlyFeatures.map((f, i) => (
                     <FeatureItem key={i} text={f} delay={i * 0.04} accent="dim" />
                   ))}
                 </div>
 
-                {/* Quarterly extras */}
-                <div
-                  className="mt-4 pt-4 space-y-3"
-                  style={{ borderTop: "1px solid rgba(255,122,0,0.12)" }}
-                >
+                <div className="mt-4 pt-4 space-y-3" style={{ borderTop: "1px solid rgba(255,122,0,0.12)" }}>
                   {quarterlyExtras.map((f, i) => (
                     <FeatureItem key={i} text={f} delay={0.3 + i * 0.05} accent="orange" />
                   ))}
                 </div>
 
-                {/* Microcopy */}
-                <p
-                  className="mt-5 text-[11px] leading-relaxed text-center"
-                  style={{ color: "rgba(255,122,0,0.38)" }}
-                >
-                  O plano preferido pelas barbearias que desejam<br />
-                  crescer com previsibilidade.
+                <p className="mt-5 text-[11px] leading-relaxed text-center" style={{ color: "rgba(255,122,0,0.38)" }}>
+                  O plano preferido pelas barbearias que desejam<br />crescer com previsibilidade.
                 </p>
               </div>
             </div>
           </motion.div>
 
-          {/* ═══════════════════════════════════
-              ANUAL — PREMIUM
-          ═══════════════════════════════════ */}
+          {/* ═══════════════════════ ANUAL — PREMIUM ═══════════════════════ */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -551,13 +453,12 @@ export function Pricing() {
             className="relative"
             style={{ paddingTop: "22px" }}
           >
-            {/* MELHOR VALOR badge */}
+            {/* Badge */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 z-30 whitespace-nowrap">
               <div
                 className="text-[11px] font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5"
                 style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%)",
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%)",
                   border: "1px solid rgba(201,168,76,0.35)",
                   color: "#C9A84C",
                   boxShadow: "0 0 18px rgba(201,168,76,0.18), 0 2px 8px rgba(0,0,0,0.3)",
@@ -568,83 +469,50 @@ export function Pricing() {
               </div>
             </div>
 
-            {/* Subtle warm ambient glow */}
+            {/* Subtle glow */}
             <motion.div
               animate={{ opacity: [0.18, 0.38, 0.18] }}
               transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
               className="absolute -inset-4 rounded-[38px] pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(201,168,76,0.10) 0%, transparent 70%)",
-              }}
+              style={{ background: "radial-gradient(ellipse at center, rgba(201,168,76,0.10) 0%, transparent 70%)" }}
             />
 
             <motion.div
               whileHover={{ y: -3 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="relative rounded-[22px] overflow-hidden h-full"
+              className="relative rounded-[22px] overflow-hidden"
               style={{
                 border: "1px solid rgba(201,168,76,0.18)",
-                boxShadow:
-                  "0 0 0 1px rgba(201,168,76,0.04), 0 20px 52px rgba(0,0,0,0.48), 0 0 24px rgba(201,168,76,0.06)",
+                boxShadow: "0 0 0 1px rgba(201,168,76,0.04), 0 20px 52px rgba(0,0,0,0.48), 0 0 24px rgba(201,168,76,0.06)",
               }}
             >
-              {/* Card bg */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(150deg, rgba(201,168,76,0.07) 0%, #0F0C00 28%, #0F0F0F 100%)",
-                }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%)",
-                }}
-              />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(150deg, rgba(201,168,76,0.07) 0%, #0F0C00 28%, #0F0F0F 100%)" }} />
+              <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%)" }} />
 
               <div className="relative z-10 p-6 lg:p-7">
-                {/* Header row */}
                 <div className="flex items-center justify-between mb-6">
-                  <div
-                    className="text-[11px] font-semibold uppercase tracking-[0.15em]"
-                    style={{ color: "rgba(201,168,76,0.6)" }}
-                  >
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.15em]" style={{ color: "rgba(201,168,76,0.6)" }}>
                     Anual
                   </div>
                   <div
                     className="text-[11px] font-bold px-2.5 py-1 rounded-full"
-                    style={{
-                      background: "rgba(52,211,153,0.08)",
-                      border: "1px solid rgba(52,211,153,0.18)",
-                      color: "#34d399",
-                    }}
+                    style={{ background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.18)", color: "#34d399" }}
                   >
                     Economize 2 meses
                   </div>
                 </div>
 
-                {/* Price */}
                 <div className="mb-1">
-                  <span
-                    className="text-[44px] lg:text-[50px] font-black text-white leading-none"
-                    style={{ letterSpacing: "-0.04em" }}
-                  >
+                  <span className="text-[44px] lg:text-[50px] font-black text-white leading-none" style={{ letterSpacing: "-0.04em" }}>
                     R$1.500
                   </span>
                   <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/ano</span>
                 </div>
-                <div
-                  className="text-xs font-medium mb-1"
-                  style={{ color: "rgba(201,168,76,0.5)" }}
-                >
+                <div className="text-xs font-medium mb-1" style={{ color: "rgba(201,168,76,0.5)" }}>
                   equivalente a R$125/mês
                 </div>
-                <p className="text-xs text-[#333] mb-7">VPS + infraestrutura premium</p>
+                <p className="text-xs text-[#333] mb-7">Pacote completo — tudo incluso</p>
 
-                {/* CTA */}
                 <motion.a
                   href={ANNUAL_URL}
                   target="_blank"
@@ -653,53 +521,60 @@ export function Pricing() {
                   whileTap={{ scale: 0.98 }}
                   className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white"
                   style={{
-                    background:
-                      "linear-gradient(135deg, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.08) 100%)",
+                    background: "linear-gradient(135deg, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.08) 100%)",
                     border: "1px solid rgba(201,168,76,0.28)",
                     boxShadow: "0 0 18px rgba(201,168,76,0.1)",
                     transition: "all 0.25s ease",
                   }}
                   onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.boxShadow =
-                      "0 0 28px rgba(201,168,76,0.2)";
-                    (e.currentTarget as HTMLElement).style.borderColor =
-                      "rgba(201,168,76,0.42)";
+                    (e.currentTarget as HTMLElement).style.boxShadow = "0 0 28px rgba(201,168,76,0.2)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.42)";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.boxShadow =
-                      "0 0 18px rgba(201,168,76,0.1)";
-                    (e.currentTarget as HTMLElement).style.borderColor =
-                      "rgba(201,168,76,0.28)";
+                    (e.currentTarget as HTMLElement).style.boxShadow = "0 0 18px rgba(201,168,76,0.1)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.28)";
                   }}
                 >
                   Solicitar acesso
                   <ArrowRight className="w-3.5 h-3.5" />
                 </motion.a>
 
-                {/* Divider */}
-                <div
-                  className="h-px mb-6"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, transparent, rgba(201,168,76,0.18), transparent)",
-                  }}
-                />
+                <div className="h-px mb-6" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.18), transparent)" }} />
 
-                {/* Monthly features */}
                 <div className="space-y-3">
                   {monthlyFeatures.map((f, i) => (
                     <FeatureItem key={i} text={f} delay={i * 0.04} accent="dim" />
                   ))}
                 </div>
 
-                {/* Annual extras */}
-                <div
-                  className="mt-4 pt-4 space-y-3"
-                  style={{ borderTop: "1px solid rgba(201,168,76,0.10)" }}
-                >
+                <div className="mt-4 pt-4 space-y-3" style={{ borderTop: "1px solid rgba(201,168,76,0.10)" }}>
                   {annualExtras.map((f, i) => (
                     <FeatureItem key={i} text={f} delay={0.3 + i * 0.05} accent="gold" />
                   ))}
+                </div>
+
+                {/* ── Bundle incluído ── */}
+                <div
+                  className="mt-5 rounded-xl p-4"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.03) 100%)",
+                    border: "1px solid rgba(201,168,76,0.18)",
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <Gift className="w-3.5 h-3.5" style={{ color: "#C9A84C" }} />
+                    <span className="text-[11px] font-bold uppercase tracking-[0.12em]" style={{ color: "#C9A84C" }}>
+                      Incluído neste plano
+                    </span>
+                  </div>
+                  <div className="space-y-2.5">
+                    {annualBundle.map(({ icon: BundleIcon, label }, i) => (
+                      <div key={i} className="flex items-center gap-2.5">
+                        <BundleIcon className="w-3.5 h-3.5 shrink-0" style={{ color: "rgba(201,168,76,0.6)" }} />
+                        <span className="text-xs" style={{ color: "rgba(201,168,76,0.75)" }}>{label}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -717,37 +592,27 @@ export function Pricing() {
           A equipe Barberpro adapta a solução de acordo com a operação da sua barbearia.
         </motion.p>
 
-        {/* ──────────────────────────────────
-            RECURSOS PREMIUM / ADD-ONS
-        ────────────────────────────────── */}
+        {/* ── Recursos Premium ── */}
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Add-ons header */}
           <div className="text-center mb-10">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-transparent to-[#FF7A00]/25" />
-              <span className="text-[11px] font-semibold text-[#FF7A00]/50 uppercase tracking-[0.16em]">
-                Expansão
-              </span>
+              <span className="text-[11px] font-semibold text-[#FF7A00]/50 uppercase tracking-[0.16em]">Expansão</span>
               <div className="h-px flex-1 max-w-[60px] bg-gradient-to-l from-transparent to-[#FF7A00]/25" />
             </div>
-            <h3
-              className="text-2xl sm:text-3xl font-black text-white mb-3"
-              style={{ letterSpacing: "-0.025em" }}
-            >
+            <h3 className="text-2xl sm:text-3xl font-black text-white mb-3" style={{ letterSpacing: "-0.025em" }}>
               Recursos Premium
             </h3>
             <p className="text-sm text-[#444] max-w-sm mx-auto leading-relaxed">
-              Expanda sua operação com serviços exclusivos
-              desenvolvidos pela equipe BarberPro.
+              Expanda sua operação com serviços exclusivos desenvolvidos pela equipe BarberPro.
             </p>
           </div>
 
-          {/* Add-on cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4">
             {addons.map((addon, i) => (
               <AddonCard key={addon.id} addon={addon} index={i} />
