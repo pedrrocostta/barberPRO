@@ -16,11 +16,11 @@ import {
 } from "lucide-react";
 
 /* ─────────────────────────────────────────────
-   Payment URLs
+   Payment URLs — defaults (Cakto)
 ───────────────────────────────────────────── */
-const MONTHLY_URL   = "https://pay.cakto.com.br/rukuppq_900664";
-const QUARTERLY_URL = "https://pay.cakto.com.br/geyz34y";
-const ANNUAL_URL    = "https://pay.cakto.com.br/34gc6ai";
+const DEFAULT_MONTHLY_URL   = "https://pay.cakto.com.br/rukuppq_900664";
+const DEFAULT_QUARTERLY_URL = "https://pay.cakto.com.br/geyz34y";
+const DEFAULT_ANNUAL_URL    = "https://pay.cakto.com.br/34gc6ai";
 
 /* ─────────────────────────────────────────────
    Plan features
@@ -244,7 +244,20 @@ function AddonCard({ addon, index }: { addon: (typeof addons)[number]; index: nu
 /* ─────────────────────────────────────────────
    Main section
 ───────────────────────────────────────────── */
-export function Pricing() {
+interface PricingProps {
+  monthlyUrl?:   string;
+  quarterlyUrl?: string;
+  annualUrl?:    string;
+}
+
+export function Pricing({
+  monthlyUrl   = DEFAULT_MONTHLY_URL,
+  quarterlyUrl = DEFAULT_QUARTERLY_URL,
+  annualUrl    = DEFAULT_ANNUAL_URL,
+}: PricingProps = {}) {
+  const MONTHLY_URL   = monthlyUrl;
+  const QUARTERLY_URL = quarterlyUrl;
+  const ANNUAL_URL    = annualUrl;
   return (
     <section id="planos" className="py-16 lg:py-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-[#0D0D0D]" />
