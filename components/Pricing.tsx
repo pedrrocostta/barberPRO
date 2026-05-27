@@ -18,9 +18,9 @@ import {
 /* ─────────────────────────────────────────────
    Payment URLs
 ───────────────────────────────────────────── */
-const MONTHLY_URL   = "https://pay.cakto.com.br/rukuppq_900664";
-const QUARTERLY_URL = "https://pay.cakto.com.br/geyz34y";
-const ANNUAL_URL    = "https://pay.cakto.com.br/34gc6ai";
+const MONTHLY_URL   = "https://pay.kiwify.com.br/kgh9YgL";
+const QUARTERLY_URL = "https://pay.kiwify.com.br/tq7jbMD";
+const ANNUAL_URL    = "https://pay.kiwify.com.br/ob2n8VC";
 
 /* ─────────────────────────────────────────────
    Plan features
