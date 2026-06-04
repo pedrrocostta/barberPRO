@@ -324,11 +324,11 @@ export function Pricing({
 
               <div className="mb-1">
                 <span className="text-[44px] lg:text-[50px] font-black text-white leading-none" style={{ letterSpacing: "-0.04em" }}>
-                  R$99
+                  {useStripe ? "R$197" : "R$99"}
                 </span>
                 <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/mês</span>
               </div>
-              <p className="text-xs text-[#333] mb-7">VPS disponível como add-on</p>
+              <p className="text-xs text-[#333] mb-7">{useStripe ? "VPS e domínio inclusos" : "VPS disponível como add-on"}</p>
 
               {useStripe ? (
                 <StripePricingButton
@@ -420,18 +420,18 @@ export function Pricing({
                     className="text-[11px] font-bold px-2.5 py-1 rounded-full"
                     style={{ background: "rgba(255,122,0,0.12)", border: "1px solid rgba(255,122,0,0.25)", color: "#FF9940" }}
                   >
-                    Economize R$47
+                    {useStripe ? "Economize R$94" : "Economize R$47"}
                   </div>
                 </div>
 
                 <div className="mb-1">
                   <span className="text-[44px] lg:text-[50px] font-black text-white leading-none" style={{ letterSpacing: "-0.04em" }}>
-                    R$250
+                    {useStripe ? "R$497" : "R$250"}
                   </span>
                   <span className="text-[#555] text-sm font-medium ml-1.5">/trimestre</span>
                 </div>
                 <div className="text-xs font-medium mb-1" style={{ color: "rgba(255,122,0,0.6)" }}>
-                  equivalente a R$83/mês
+                  {useStripe ? "equivalente a R$167/mês" : "equivalente a R$83/mês"}
                 </div>
                 <p className="text-xs text-[#333] mb-7">VPS disponível como add-on</p>
 
@@ -530,18 +530,18 @@ export function Pricing({
                     className="text-[11px] font-bold px-2.5 py-1 rounded-full"
                     style={{ background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.18)", color: "#34d399" }}
                   >
-                    Economize 2 meses
+                    {useStripe ? "Economize R$840/ano" : "Economize 2 meses"}
                   </div>
                 </div>
 
                 <div className="mb-1">
                   <span className="text-[44px] lg:text-[50px] font-black text-white leading-none" style={{ letterSpacing: "-0.04em" }}>
-                    R$1.500
+                    {useStripe ? "R$1.524" : "R$1.500"}
                   </span>
                   <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/ano</span>
                 </div>
                 <div className="text-xs font-medium mb-1" style={{ color: "rgba(201,168,76,0.5)" }}>
-                  equivalente a R$125/mês
+                  {useStripe ? "equivalente a R$127/mês" : "equivalente a R$125/mês"}
                 </div>
                 <p className="text-xs text-[#333] mb-7">Pacote completo — tudo incluso</p>
 
