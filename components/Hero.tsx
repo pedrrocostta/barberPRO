@@ -87,8 +87,9 @@ const trustSignals = [
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const mockupRef = useRef<HTMLDivElement>(null);
 
-  /* Spotlight via direct DOM — sem useState, sem re-renders */
+  /* Spotlight + 3D tilt via direct DOM — sem useState, sem re-renders */
   useEffect(() => {
     let raf = 0;
     const onMove = (e: MouseEvent) => {
@@ -96,15 +97,35 @@ export function Hero() {
       raf = requestAnimationFrame(() => {
         const el = sectionRef.current;
         const sp = spotlightRef.current;
+        const mk = mockupRef.current;
         if (!el || !sp) return;
         const rect = el.getBoundingClientRect();
         sp.style.left = e.clientX - rect.left + "px";
         sp.style.top = e.clientY - rect.top + "px";
+
+        // 3D tilt on mockup
+        if (mk) {
+          const mr = mk.getBoundingClientRect();
+          const cx = mr.left + mr.width / 2;
+          const cy = mr.top + mr.height / 2;
+          const dx = (e.clientX - cx) / (mr.width / 2);
+          const dy = (e.clientY - cy) / (mr.height / 2);
+          const rotX = -dy * 4;
+          const rotY = dx * 5;
+          mk.style.transform = `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.01,1.01,1.01)`;
+        }
       });
     };
+    const onLeave = () => {
+      if (mockupRef.current) {
+        mockupRef.current.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+      }
+    };
     window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("mouseleave", onLeave, { passive: true });
     return () => {
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseleave", onLeave);
       cancelAnimationFrame(raf);
     };
   }, []);
@@ -215,9 +236,9 @@ export function Hero() {
 
         {/* Dashboard mockup */}
         <motion.div
-          initial={{ opacity: 0, y: 64, scale: 0.95 }}
+          initial={{ opacity: 0, y: 64, scale: 0.93 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="relative mt-12 lg:mt-20 max-w-5xl mx-auto"
         >
           {/* Floating cards */}
@@ -237,11 +258,17 @@ export function Hero() {
             </motion.div>
           ))}
 
-          {/* Subtle glow behind mockup */}
-          <div className="absolute -inset-2 rounded-[32px] bg-[#FF7A00]/[0.04] blur-xl pointer-events-none" />
+          {/* 3D glow ring */}
+          <div className="absolute -inset-px rounded-[32px] bg-gradient-to-b from-[#FF7A00]/20 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute -inset-4 rounded-[36px] bg-[#FF7A00]/[0.06] blur-2xl pointer-events-none" />
 
+          {/* 3D Mockup wrapper — receives mouse tilt */}
+          <div
+            ref={mockupRef}
+            style={{ transition: 'transform 0.15s ease-out', transformStyle: 'preserve-3d' }}
+          >
           {/* Browser window */}
-          <div className="relative rounded-3xl overflow-hidden border border-white/[0.08] shadow-[0_0_80px_rgba(0,0,0,0.85),0_0_40px_rgba(255,122,0,0.06)]">
+          <div className="relative rounded-3xl overflow-hidden border border-white/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.85),0_0_40px_rgba(255,122,0,0.08),inset_0_1px_0_rgba(255,255,255,0.06)]">
             {/* Chrome */}
             <div className="bg-[#181818] border-b border-white/[0.06] px-4 py-3.5 flex items-center gap-3">
               <div className="flex gap-1.5">
@@ -354,6 +381,7 @@ export function Hero() {
 
           {/* Bottom glow */}
           <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-1/2 h-16 bg-[#FF7A00]/[0.06] blur-[48px] pointer-events-none" />
+          </div>{/* end 3D wrapper */}
         </motion.div>
       </div>
     </section>
