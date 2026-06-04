@@ -61,7 +61,7 @@ export default function CaktoPage() {
       <main className="flex flex-col pb-20 lg:pb-0">
         <div className="order-1"><Hero /></div>
         <div className="order-2"><Clients /></div>
-        <div className="order-3 lg:order-8">
+        <div className="order-3 lg:order-6">
           <Pricing
             monthlyUrl={MONTHLY_URL}
             quarterlyUrl={QUARTERLY_URL}
@@ -71,8 +71,8 @@ export default function CaktoPage() {
         <div className="order-4 lg:order-3"><HowItWorks /></div>
         <div className="order-5 lg:order-4"><Benefits /></div>
         <div className="order-6 lg:order-5"><Features /></div>
-        <div className="order-7 lg:order-6"><Dashboard /></div>
-        <div className="order-8 lg:order-7"><MobileApp /></div>
+        <div className="order-7 lg:order-7"><Dashboard /></div>
+        <div className="order-8 lg:order-8"><MobileApp /></div>
         <div className="order-9"><Testimonials /></div>
         <div className="order-10"><FAQ /></div>
         <div className="order-11"><CTA /></div>

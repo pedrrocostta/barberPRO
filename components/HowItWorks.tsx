@@ -177,7 +177,7 @@ export function HowItWorks() {
           <motion.button
             whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            onClick={() => document.getElementById("planos")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => window.location.href = 'https://deividfortunato.shop/registro'}
             className="btn-primary px-8 py-3.5 rounded-2xl text-sm font-bold text-white inline-flex items-center gap-2 shadow-[0_0_24px_rgba(255,122,0,0.28)]"
           >
             Começar agora

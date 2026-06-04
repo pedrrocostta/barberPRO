@@ -141,6 +141,7 @@ export function CTA() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => window.location.href = 'https://deividfortunato.shop/registro'}
               className="btn-secondary w-full sm:w-auto px-10 py-5 rounded-2xl text-lg font-semibold text-white"
             >
               Falar com consultor

@@ -10,7 +10,6 @@ import {
   Phone,
   MapPin,
   ArrowUpRight,
-  ExternalLink,
 } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 
