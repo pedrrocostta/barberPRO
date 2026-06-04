@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { MessageCircle, CheckCircle2, Zap, Settings, Rocket } from "lucide-react";
+import { MessageCircle, Settings, Rocket } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 
 /* ─── WhatsApp config ─── */
@@ -11,6 +12,27 @@ const WA_MESSAGE = encodeURIComponent(
   "Olá! Acabei de realizar o pagamento do BarberPro e gostaria de ativar minha conta! 🚀"
 );
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
+
+/* ─── Plan info ─── */
+const PLAN_INFO: Record<string, { label: string; price: string; period: string; saving?: string }> = {
+  mensal: {
+    label: "Plano Mensal",
+    price: "R$ 197",
+    period: "/mês",
+  },
+  trimestral: {
+    label: "Plano Trimestral",
+    price: "R$ 497",
+    period: "/trimestre",
+    saving: "Você economizou R$ 94 vs mensal 🎉",
+  },
+  anual: {
+    label: "Plano Anual",
+    price: "R$ 1.524",
+    period: "/ano",
+    saving: "Você economizou R$ 840 vs mensal 🎉",
+  },
+};
 
 /* ─── Steps ─── */
 const steps = [
@@ -35,47 +57,32 @@ const steps = [
 function AnimatedCheck() {
   return (
     <div className="relative flex items-center justify-center">
-      {/* Outer pulse ring */}
       <motion.div
         animate={{ scale: [1, 1.18, 1], opacity: [0.4, 0, 0.4] }}
         transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
         className="absolute w-32 h-32 rounded-full"
         style={{ background: "radial-gradient(circle, rgba(255,122,0,0.18) 0%, transparent 70%)" }}
       />
-      {/* Inner glow */}
       <motion.div
         animate={{ opacity: [0.3, 0.6, 0.3] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         className="absolute w-20 h-20 rounded-full"
         style={{ background: "radial-gradient(circle, rgba(255,122,0,0.22) 0%, transparent 70%)" }}
       />
-      {/* SVG circle + check */}
       <svg width="80" height="80" viewBox="0 0 80 80" fill="none" className="relative z-10">
-        {/* Background circle */}
         <circle cx="40" cy="40" r="38" fill="rgba(255,122,0,0.08)" stroke="rgba(255,122,0,0.2)" strokeWidth="1" />
-        {/* Animated circle stroke */}
         <motion.circle
-          cx="40"
-          cy="40"
-          r="34"
-          stroke="#FF7A00"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          fill="none"
+          cx="40" cy="40" r="34"
+          stroke="#FF7A00" strokeWidth="2.5" strokeLinecap="round" fill="none"
           strokeDasharray="213.6"
           initial={{ strokeDashoffset: 213.6 }}
           animate={{ strokeDashoffset: 0 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
           style={{ transformOrigin: "center", rotate: "-90deg" }}
         />
-        {/* Animated checkmark */}
         <motion.path
           d="M24 40 L35 51 L56 30"
-          stroke="#FF7A00"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
+          stroke="#FF7A00" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" fill="none"
           strokeDasharray="44"
           initial={{ strokeDashoffset: 44 }}
           animate={{ strokeDashoffset: 0 }}
@@ -86,27 +93,21 @@ function AnimatedCheck() {
   );
 }
 
-/* ─── Page ─── */
-export default function Obrigado() {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 100);
-    return () => clearTimeout(t);
-  }, []);
+/* ─── Inner page (reads search params) ─── */
+function ObrigadoContent() {
+  const searchParams = useSearchParams();
+  const plan = searchParams.get("plan") || "";
+  const planInfo = PLAN_INFO[plan] || null;
 
   return (
     <div
       className="min-h-screen flex flex-col relative overflow-hidden"
       style={{ background: "#0A0A0A" }}
     >
-      {/* Background glows */}
+      {/* Background */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center top, rgba(255,122,0,0.09) 0%, transparent 65%)",
-        }}
+        style={{ background: "radial-gradient(ellipse at center top, rgba(255,122,0,0.09) 0%, transparent 65%)" }}
       />
       <div className="absolute inset-0 hero-grid opacity-[0.12] pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF7A00]/20 to-transparent" />
@@ -155,12 +156,43 @@ export default function Obrigado() {
           </p>
         </motion.div>
 
+        {/* Plan badge (shown when plan is known) */}
+        {planInfo && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.65 }}
+            className="mb-6"
+          >
+            <div
+              className="inline-flex flex-col items-center gap-1 rounded-2xl px-6 py-3"
+              style={{
+                background: "rgba(255,122,0,0.06)",
+                border: "1px solid rgba(255,122,0,0.18)",
+              }}
+            >
+              <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "rgba(255,122,0,0.5)" }}>
+                {planInfo.label}
+              </span>
+              <span className="text-2xl font-black text-white">
+                {planInfo.price}
+                <span className="text-sm font-medium text-[#555] ml-1">{planInfo.period}</span>
+              </span>
+              {planInfo.saving && (
+                <span className="text-xs font-medium" style={{ color: "#4ade80" }}>
+                  {planInfo.saving}
+                </span>
+              )}
+            </div>
+          </motion.div>
+        )}
+
         {/* WhatsApp CTA */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.75 }}
-          className="mt-8 mb-4 w-full max-w-xs sm:max-w-sm"
+          className="mt-4 mb-4 w-full max-w-xs sm:max-w-sm"
         >
           <motion.a
             href={WA_URL}
@@ -171,11 +203,9 @@ export default function Obrigado() {
             className="flex items-center justify-center gap-3 w-full py-4 sm:py-5 rounded-2xl text-base sm:text-lg font-bold text-white"
             style={{
               background: "linear-gradient(135deg, #25D366 0%, #1DA851 100%)",
-              boxShadow:
-                "0 0 40px rgba(37,211,102,0.35), 0 8px 24px rgba(0,0,0,0.3)",
+              boxShadow: "0 0 40px rgba(37,211,102,0.35), 0 8px 24px rgba(0,0,0,0.3)",
             }}
           >
-            {/* WhatsApp icon */}
             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
@@ -220,14 +250,12 @@ export default function Obrigado() {
               }}
             >
               <div className="flex items-center gap-3 mb-2">
-                {/* Number */}
                 <span
                   className="text-[11px] font-black tabular-nums"
                   style={{ color: "rgba(255,122,0,0.3)" }}
                 >
                   0{i + 1}
                 </span>
-                {/* Icon */}
                 <div
                   className="w-8 h-8 rounded-xl flex items-center justify-center"
                   style={{
@@ -263,5 +291,18 @@ export default function Obrigado() {
         </motion.p>
       </div>
     </div>
+  );
+}
+
+/* ─── Page (wrapped in Suspense for useSearchParams) ─── */
+export default function Obrigado() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#0A0A0A" }}>
+        <div className="w-8 h-8 border-2 border-[#FF7A00]/30 border-t-[#FF7A00] rounded-full animate-spin" />
+      </div>
+    }>
+      <ObrigadoContent />
+    </Suspense>
   );
 }

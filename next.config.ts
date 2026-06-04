@@ -63,11 +63,11 @@ const securityHeaders = [
       // Imagens: self + data URIs para SVGs inline
       "img-src 'self' data: blob: https:",
 
-      // Conexões de rede: self + WhatsApp + Cakto (pagamentos)
-      "connect-src 'self' https://pay.cakto.com.br https://wa.me https://api.whatsapp.com",
+      // Conexões de rede: self + WhatsApp + Cakto + Kiwify (pagamentos)
+      "connect-src 'self' https://pay.cakto.com.br https://pay.kiwify.com.br https://wa.me https://api.whatsapp.com https://chat.whatsapp.com https://api.stripe.com https://js.stripe.com https://checkout.stripe.com",
 
-      // Iframes embutidos: nenhum permitido
-      "frame-src 'none'",
+      // Iframes: Stripe Checkout precisa de frame para 3D Secure
+      "frame-src https://js.stripe.com https://hooks.stripe.com",
 
       // Impede que este site seja embutido em qualquer iframe externo
       "frame-ancestors 'none'",

@@ -19,9 +19,13 @@ import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-export default function Home() {
+/* ─── Cakto payment links ─── */
+const MONTHLY_URL   = "https://pay.cakto.com.br/rukuppq_900664";
+const QUARTERLY_URL = "https://pay.cakto.com.br/geyz34y";
+const ANNUAL_URL    = "https://pay.cakto.com.br/34gc6ai";
+
+export default function CaktoPage() {
   useEffect(() => {
-    // Lenis smooth scroll
     let lenis: { raf: (t: number) => void; destroy: () => void } | null = null;
 
     const initLenis = async () => {
@@ -46,9 +50,7 @@ export default function Home() {
     };
 
     initLenis();
-    return () => {
-      lenis?.destroy();
-    };
+    return () => { lenis?.destroy(); };
   }, []);
 
   return (
@@ -56,11 +58,16 @@ export default function Home() {
       <CustomCursor />
       <ScrollProgress />
       <Navbar />
-      {/* flex-col + order classes: Pricing sobe para 3º no mobile, mantém 7º no desktop */}
       <main className="flex flex-col pb-20 lg:pb-0">
         <div className="order-1"><Hero /></div>
         <div className="order-2"><Clients /></div>
-        <div className="order-3 lg:order-8"><Pricing useStripe /></div>
+        <div className="order-3 lg:order-8">
+          <Pricing
+            monthlyUrl={MONTHLY_URL}
+            quarterlyUrl={QUARTERLY_URL}
+            annualUrl={ANNUAL_URL}
+          />
+        </div>
         <div className="order-4 lg:order-3"><HowItWorks /></div>
         <div className="order-5 lg:order-4"><Benefits /></div>
         <div className="order-6 lg:order-5"><Features /></div>
@@ -70,7 +77,8 @@ export default function Home() {
         <div className="order-10"><FAQ /></div>
         <div className="order-11"><CTA /></div>
       </main>
-      {/* ── Sticky mobile CTA — hidden on desktop ── */}
+
+      {/* Sticky mobile CTA */}
       <div className="fixed bottom-0 inset-x-0 z-50 lg:hidden mobile-sticky-cta px-4 pt-3 pb-4">
         <motion.button
           whileTap={{ scale: 0.97 }}

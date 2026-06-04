@@ -14,6 +14,7 @@ import {
   Server,
   Gift,
 } from "lucide-react";
+import { StripePricingButton } from "@/components/ui/StripePricingButton";
 
 /* ─────────────────────────────────────────────
    Payment URLs — defaults (Cakto)
@@ -248,12 +249,14 @@ interface PricingProps {
   monthlyUrl?:   string;
   quarterlyUrl?: string;
   annualUrl?:    string;
+  useStripe?:    boolean;
 }
 
 export function Pricing({
   monthlyUrl   = DEFAULT_MONTHLY_URL,
   quarterlyUrl = DEFAULT_QUARTERLY_URL,
   annualUrl    = DEFAULT_ANNUAL_URL,
+  useStripe    = false,
 }: PricingProps = {}) {
   const MONTHLY_URL   = monthlyUrl;
   const QUARTERLY_URL = quarterlyUrl;
@@ -327,17 +330,25 @@ export function Pricing({
               </div>
               <p className="text-xs text-[#333] mb-7">VPS disponível como add-on</p>
 
-              <motion.a
-                href={MONTHLY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-3 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white btn-secondary"
-              >
-                Começar agora
-                <ArrowRight className="w-3.5 h-3.5" />
-              </motion.a>
+              {useStripe ? (
+                <StripePricingButton
+                  plan="mensal"
+                  label="Assinar agora"
+                  className="w-full py-3 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white btn-secondary"
+                />
+              ) : (
+                <motion.a
+                  href={MONTHLY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-3 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white btn-secondary"
+                >
+                  Começar agora
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </motion.a>
+              )}
 
               <div className="h-px bg-white/[0.04] mb-6" />
 
@@ -424,17 +435,25 @@ export function Pricing({
                 </div>
                 <p className="text-xs text-[#333] mb-7">VPS disponível como add-on</p>
 
-                <motion.a
-                  href={QUARTERLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 btn-primary text-white shadow-[0_0_32px_rgba(255,122,0,0.35)]"
-                >
-                  Assinar agora
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </motion.a>
+                {useStripe ? (
+                  <StripePricingButton
+                    plan="trimestral"
+                    label="Assinar agora"
+                    className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 btn-primary text-white shadow-[0_0_32px_rgba(255,122,0,0.35)]"
+                  />
+                ) : (
+                  <motion.a
+                    href={QUARTERLY_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.02, y: -1 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 btn-primary text-white shadow-[0_0_32px_rgba(255,122,0,0.35)]"
+                  >
+                    Assinar agora
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </motion.a>
+                )}
 
                 <div className="h-px mb-6" style={{ background: "linear-gradient(90deg, transparent, rgba(255,122,0,0.25), transparent)" }} />
 
@@ -526,31 +545,45 @@ export function Pricing({
                 </div>
                 <p className="text-xs text-[#333] mb-7">Pacote completo — tudo incluso</p>
 
-                <motion.a
-                  href={ANNUAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white"
-                  style={{
-                    background: "linear-gradient(135deg, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.08) 100%)",
-                    border: "1px solid rgba(201,168,76,0.28)",
-                    boxShadow: "0 0 18px rgba(201,168,76,0.1)",
-                    transition: "all 0.25s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.boxShadow = "0 0 28px rgba(201,168,76,0.2)";
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.42)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.boxShadow = "0 0 18px rgba(201,168,76,0.1)";
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.28)";
-                  }}
-                >
-                  Solicitar acesso
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </motion.a>
+                {useStripe ? (
+                  <StripePricingButton
+                    plan="anual"
+                    label="Solicitar acesso"
+                    className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.08) 100%)",
+                      border: "1px solid rgba(201,168,76,0.28)",
+                      boxShadow: "0 0 18px rgba(201,168,76,0.1)",
+                      transition: "all 0.25s ease",
+                    }}
+                  />
+                ) : (
+                  <motion.a
+                    href={ANNUAL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.02, y: -1 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.08) 100%)",
+                      border: "1px solid rgba(201,168,76,0.28)",
+                      boxShadow: "0 0 18px rgba(201,168,76,0.1)",
+                      transition: "all 0.25s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.boxShadow = "0 0 28px rgba(201,168,76,0.2)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.42)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.boxShadow = "0 0 18px rgba(201,168,76,0.1)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.28)";
+                    }}
+                  >
+                    Solicitar acesso
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </motion.a>
+                )}
 
                 <div className="h-px mb-6" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.18), transparent)" }} />
 
