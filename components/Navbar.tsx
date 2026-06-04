@@ -83,7 +83,7 @@ export function Navbar() {
               <motion.button
                 whileHover={{ scale: 1.03, y: -1 }}
                 whileTap={{ scale: 0.97 }}
-                onClick={() => handleNavClick("#planos")}
+                onClick={() => window.location.href = 'https://deividfortunato.shop/registro'}
                 className="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex items-center gap-1.5 shadow-[0_0_20px_rgba(255,122,0,0.25)]"
               >
                 Solicitar acesso
@@ -127,7 +127,7 @@ export function Navbar() {
               ))}
               <div className="pt-3 pb-1 flex flex-col gap-2 border-t border-white/[0.05] mt-2">
                 <button
-                  onClick={() => handleNavClick("#planos")}
+                  onClick={() => window.location.href = 'https://deividfortunato.shop/registro'}
                   className="btn-primary px-4 py-3.5 rounded-xl text-sm font-semibold text-white text-center flex items-center justify-center gap-2"
                 >
                   Solicitar acesso

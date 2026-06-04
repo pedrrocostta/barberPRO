@@ -212,7 +212,7 @@ export function Hero() {
             <motion.button
               whileHover={{ scale: 1.03, y: -3 }}
               whileTap={{ scale: 0.97 }}
-              onClick={() => document.getElementById("planos")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => window.location.href = 'https://deividfortunato.shop/registro'}
               className="btn-primary w-full sm:w-auto px-10 py-4 rounded-2xl text-base font-bold text-white flex items-center justify-center gap-2.5 group shadow-[0_0_32px_rgba(255,122,0,0.3)]"
             >
               Solicitar acesso

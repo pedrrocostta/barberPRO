@@ -132,7 +132,7 @@ export function CTA() {
             <motion.button
               whileHover={{ scale: 1.04, y: -3 }}
               whileTap={{ scale: 0.97 }}
-              onClick={() => document.getElementById("planos")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => window.location.href = 'https://deividfortunato.shop/registro'}
               className="btn-primary w-full sm:w-auto px-12 py-5 rounded-2xl text-lg font-bold text-white flex items-center justify-center gap-3 shadow-[0_0_48px_rgba(255,122,0,0.38),0_6px_24px_rgba(255,122,0,0.16)] group"
             >
               Solicitar acesso
