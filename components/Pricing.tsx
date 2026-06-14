@@ -12,7 +12,6 @@ import {
   Tablet,
   Wand2,
   Server,
-  Gift,
 } from "lucide-react";
 import { StripePricingButton } from "@/components/ui/StripePricingButton";
 
@@ -26,7 +25,7 @@ const DEFAULT_ANNUAL_URL    = "https://pay.cakto.com.br/34gc6ai";
 /* ─────────────────────────────────────────────
    Plan features
 ───────────────────────────────────────────── */
-const monthlyFeatures = [
+const coreFeatures = [
   "Agendamento inteligente",
   "Gestão completa",
   "WhatsApp automático",
@@ -34,48 +33,30 @@ const monthlyFeatures = [
   "Clientes ilimitados",
 ];
 
+const monthlyFeatures = [
+  ...coreFeatures,
+  "VPS incluso",
+  "Domínio incluso",
+];
+
 const quarterlyExtras = [
-  "Tudo do plano mensal",
-  "Melhor valor mensal",
   "Prioridade em atualizações",
-  "Melhor equilíbrio custo-benefício",
+  "Melhor custo-benefício",
 ];
 
-const annualExtras = [
-  "Tudo do trimestral",
-  "Prioridade nas personalizações",
+const annualFeatures = [
+  ...coreFeatures,
+  "VPS + infraestrutura premium",
+  "Domínio personalizado",
+  "Prioridade em personalizações",
+  "Onboarding assistido",
   "Melhor investimento de longo prazo",
-];
-
-/* Bônus inclusos apenas no anual */
-const annualBundle = [
-  { icon: Server, label: "VPS + infraestrutura premium" },
-  { icon: Globe,  label: "Domínio personalizado" },
-  { icon: Gift,   label: "Onboarding assistido pela equipe" },
 ];
 
 /* ─────────────────────────────────────────────
    Add-ons
 ───────────────────────────────────────────── */
 const addons = [
-  {
-    id: "vps",
-    Icon: Server,
-    title: "Hospedagem VPS",
-    desc: "Infraestrutura dedicada e premium para sua plataforma BarberPro. Incluso gratuitamente no plano Anual.",
-    price: "",
-    period: "",
-    cta: "Consultar valor",
-  },
-  {
-    id: "domain",
-    Icon: Globe,
-    title: "Domínio personalizado",
-    desc: "Acesse com seu próprio domínio. Identidade completa para sua barbearia. Incluso no plano Anual.",
-    price: "R$50",
-    period: "/mês",
-    cta: null,
-  },
   {
     id: "google",
     Icon: Smartphone,
@@ -324,16 +305,16 @@ export function Pricing({
 
               <div className="mb-1">
                 <span className="text-[44px] lg:text-[50px] font-black text-white leading-none" style={{ letterSpacing: "-0.04em" }}>
-                  R$99
+                  R$197
                 </span>
                 <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/mês</span>
               </div>
-              <p className="text-xs text-[#333] mb-7">VPS disponível como add-on</p>
+              <p className="text-xs text-[#444] mb-7">Ideal para quem quer começar sem compromisso.</p>
 
               {useStripe ? (
                 <StripePricingButton
                   plan="mensal"
-                  label="Assinar agora"
+                  label="Assinar — Mensal"
                   className="w-full py-3 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white btn-secondary"
                 />
               ) : (
@@ -345,7 +326,7 @@ export function Pricing({
                   whileTap={{ scale: 0.98 }}
                   className="w-full py-3 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white btn-secondary"
                 >
-                  Começar agora
+                  Assinar — Mensal
                   <ArrowRight className="w-3.5 h-3.5" />
                 </motion.a>
               )}
@@ -356,6 +337,16 @@ export function Pricing({
                 {monthlyFeatures.map((f, i) => (
                   <FeatureItem key={i} text={f} delay={i * 0.04} accent="dim" />
                 ))}
+              </div>
+
+              {/* VPS + Domínio badge */}
+              <div
+                className="mt-6 flex items-center gap-2.5 rounded-xl px-4 py-3"
+                style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}
+              >
+                <Server className="w-3.5 h-3.5 shrink-0 text-[#555]" />
+                <Globe className="w-3.5 h-3.5 shrink-0 text-[#555]" />
+                <span className="text-xs font-medium text-[#555]">VPS + Domínio inclusos</span>
               </div>
             </motion.div>
           </motion.div>
@@ -420,25 +411,22 @@ export function Pricing({
                     className="text-[11px] font-bold px-2.5 py-1 rounded-full"
                     style={{ background: "rgba(255,122,0,0.12)", border: "1px solid rgba(255,122,0,0.25)", color: "#FF9940" }}
                   >
-                    Economize R$47
+                    Economize R$90
                   </div>
                 </div>
 
                 <div className="mb-1">
                   <span className="text-[44px] lg:text-[50px] font-black text-white leading-none" style={{ letterSpacing: "-0.04em" }}>
-                    R$250
+                    R$167
                   </span>
-                  <span className="text-[#555] text-sm font-medium ml-1.5">/trimestre</span>
+                  <span className="text-[#555] text-sm font-medium ml-1.5">/mês · cobrado a cada 3 meses</span>
                 </div>
-                <div className="text-xs font-medium mb-1" style={{ color: "rgba(255,122,0,0.6)" }}>
-                  equivalente a R$83/mês
-                </div>
-                <p className="text-xs text-[#333] mb-7">VPS disponível como add-on</p>
+                <p className="text-xs text-[#444] mb-7">Economize R$90 e garanta 3 meses de sistema premium.</p>
 
                 {useStripe ? (
                   <StripePricingButton
                     plan="trimestral"
-                    label="Assinar agora"
+                    label="Assinar — Trimestral"
                     className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 btn-primary text-white shadow-[0_0_32px_rgba(255,122,0,0.35)]"
                   />
                 ) : (
@@ -450,7 +438,7 @@ export function Pricing({
                     whileTap={{ scale: 0.98 }}
                     className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 btn-primary text-white shadow-[0_0_32px_rgba(255,122,0,0.35)]"
                   >
-                    Assinar agora
+                    Assinar — Trimestral
                     <ArrowRight className="w-3.5 h-3.5" />
                   </motion.a>
                 )}
@@ -469,9 +457,15 @@ export function Pricing({
                   ))}
                 </div>
 
-                <p className="mt-5 text-[11px] leading-relaxed text-center" style={{ color: "rgba(255,122,0,0.38)" }}>
-                  O plano preferido pelas barbearias que desejam<br />crescer com previsibilidade.
-                </p>
+                {/* VPS + Domínio badge */}
+                <div
+                  className="mt-6 flex items-center gap-2.5 rounded-xl px-4 py-3"
+                  style={{ background: "rgba(255,122,0,0.06)", border: "1px solid rgba(255,122,0,0.15)" }}
+                >
+                  <Server className="w-3.5 h-3.5 shrink-0 text-[#FF7A00]/60" />
+                  <Globe className="w-3.5 h-3.5 shrink-0 text-[#FF7A00]/60" />
+                  <span className="text-xs font-medium" style={{ color: "rgba(255,122,0,0.6)" }}>VPS + Domínio inclusos</span>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -530,25 +524,22 @@ export function Pricing({
                     className="text-[11px] font-bold px-2.5 py-1 rounded-full"
                     style={{ background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.18)", color: "#34d399" }}
                   >
-                    Economize 2 meses
+                    Economize R$840
                   </div>
                 </div>
 
                 <div className="mb-1">
                   <span className="text-[44px] lg:text-[50px] font-black text-white leading-none" style={{ letterSpacing: "-0.04em" }}>
-                    R$1.500
+                    R$127
                   </span>
-                  <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/ano</span>
+                  <span className="text-[#3A3A3A] text-sm font-medium ml-1.5">/mês · cobrado anualmente (R$1.524/ano)</span>
                 </div>
-                <div className="text-xs font-medium mb-1" style={{ color: "rgba(201,168,76,0.5)" }}>
-                  equivalente a R$125/mês
-                </div>
-                <p className="text-xs text-[#333] mb-7">Pacote completo — tudo incluso</p>
+                <p className="text-xs text-[#444] mb-7">O investimento mais inteligente. Economize R$840/ano.</p>
 
                 {useStripe ? (
                   <StripePricingButton
                     plan="anual"
-                    label="Solicitar acesso"
+                    label="Assinar — Anual"
                     className="w-full py-3.5 rounded-xl text-sm font-bold mb-7 flex items-center justify-center gap-2 text-white"
                     style={{
                       background: "linear-gradient(135deg, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.08) 100%)",
@@ -580,7 +571,7 @@ export function Pricing({
                       (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.28)";
                     }}
                   >
-                    Solicitar acesso
+                    Assinar — Anual
                     <ArrowRight className="w-3.5 h-3.5" />
                   </motion.a>
                 )}
@@ -588,39 +579,19 @@ export function Pricing({
                 <div className="h-px mb-6" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.18), transparent)" }} />
 
                 <div className="space-y-3">
-                  {monthlyFeatures.map((f, i) => (
-                    <FeatureItem key={i} text={f} delay={i * 0.04} accent="dim" />
+                  {annualFeatures.map((f, i) => (
+                    <FeatureItem key={i} text={f} delay={i * 0.04} accent={i >= 5 ? "gold" : "dim"} />
                   ))}
                 </div>
 
-                <div className="mt-4 pt-4 space-y-3" style={{ borderTop: "1px solid rgba(201,168,76,0.10)" }}>
-                  {annualExtras.map((f, i) => (
-                    <FeatureItem key={i} text={f} delay={0.3 + i * 0.05} accent="gold" />
-                  ))}
-                </div>
-
-                {/* ── Bundle incluído ── */}
+                {/* VPS + Domínio badge */}
                 <div
-                  className="mt-5 rounded-xl p-4"
-                  style={{
-                    background: "linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.03) 100%)",
-                    border: "1px solid rgba(201,168,76,0.18)",
-                  }}
+                  className="mt-6 flex items-center gap-2.5 rounded-xl px-4 py-3"
+                  style={{ background: "rgba(201,168,76,0.06)", border: "1px solid rgba(201,168,76,0.18)" }}
                 >
-                  <div className="flex items-center gap-2 mb-3">
-                    <Gift className="w-3.5 h-3.5" style={{ color: "#C9A84C" }} />
-                    <span className="text-[11px] font-bold uppercase tracking-[0.12em]" style={{ color: "#C9A84C" }}>
-                      Incluído neste plano
-                    </span>
-                  </div>
-                  <div className="space-y-2.5">
-                    {annualBundle.map(({ icon: BundleIcon, label }, i) => (
-                      <div key={i} className="flex items-center gap-2.5">
-                        <BundleIcon className="w-3.5 h-3.5 shrink-0" style={{ color: "rgba(201,168,76,0.6)" }} />
-                        <span className="text-xs" style={{ color: "rgba(201,168,76,0.75)" }}>{label}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <Server className="w-3.5 h-3.5 shrink-0" style={{ color: "rgba(201,168,76,0.6)" }} />
+                  <Globe className="w-3.5 h-3.5 shrink-0" style={{ color: "rgba(201,168,76,0.6)" }} />
+                  <span className="text-xs font-medium" style={{ color: "rgba(201,168,76,0.65)" }}>VPS + Domínio inclusos</span>
                 </div>
               </div>
             </motion.div>

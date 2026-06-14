@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: "O que é o VPS e por que eu precisaria dele?",
-    a: "O VPS (Servidor Virtual Privado) é a infraestrutura onde sua plataforma BarberPro fica hospedada. Com o VPS, seu sistema roda de forma independente, com mais velocidade, estabilidade e segurança. Nos planos Mensal e Trimestral o VPS é opcional e pode ser contratado como add-on. No plano Anual, o VPS já está incluso sem custo adicional.",
+    a: "O VPS (Servidor Virtual Privado) é a infraestrutura onde sua plataforma BarberPro fica hospedada. Com o VPS, seu sistema roda de forma independente, com mais velocidade, estabilidade e segurança. O VPS já está incluso em todos os nossos planos — Mensal, Trimestral e Anual — sem custo adicional.",
   },
   {
     q: "Posso mudar de plano depois?",
@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: "O plano Anual realmente inclui VPS, Domínio e Onboarding?",
-    a: "Sim. No plano Anual (R$1.500/ano) você recebe: infraestrutura VPS dedicada, domínio personalizado para sua barbearia e uma sessão de onboarding assistido com nossa equipe para configurar tudo do zero. São benefícios que somam mais de R$600 em valor avulso.",
+    a: "Sim. No plano Anual (R$1.524/ano) você recebe VPS + infraestrutura premium, domínio personalizado para sua barbearia e uma sessão de onboarding assistido com nossa equipe para configurar tudo do zero. São benefícios que somam mais de R$600 em valor avulso.",
   },
   {
     q: "Como funciona o Onboarding assistido?",

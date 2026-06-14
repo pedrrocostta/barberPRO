@@ -22,9 +22,9 @@ const PLAN_INFO: Record<string, { label: string; price: string; period: string; 
   },
   trimestral: {
     label: "Plano Trimestral",
-    price: "R$ 497",
+    price: "R$ 501",
     period: "/trimestre",
-    saving: "Você economizou R$ 94 vs mensal 🎉",
+    saving: "Você economizou R$ 90 vs mensal 🎉",
   },
   anual: {
     label: "Plano Anual",
